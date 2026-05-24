@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ORBIS — Operator Training & Evaluation Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #f4f5f7;
+  --surface:  #ffffff;
+  --ink:      #0b0d11;
+  --ink-2:    #2e3340;
+  --ink-3:    #5a6072;
+  --rule:     #dde0e8;
+  --rule-2:   #c8ccd6;
+  --accent:   #0057b8;
+  --accent-2: #003d82;
+  --accent-lt:#e6eef8;
+  --warn:     #b85200;
+  --warn-lt:  #fdf0e6;
+  --green:    #006b3c;
+  --green-lt: #e6f4ed;
+  --mono:     'JetBrains Mono', monospace;
+  --cond:     'Barlow Condensed', sans-serif;
+  --sans:     'Barlow', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ── COVER ── */
+.cover {
+  background: var(--ink);
+  color: #fff;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.cover-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.cover-circle {
+  position: absolute;
+  right: -120px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.cover-circle::before {
+  content: '';
+  position: absolute;
+  inset: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.cover-circle::after {
+  content: '';
+  position: absolute;
+  inset: 100px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,87,184,0.3);
+  background: rgba(0,87,184,0.04);
+}
+
+.cover-top {
+  padding: 32px 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  position: relative;
+  z-index: 2;
+}
+
+.cover-logo {
+  font-family: var(--cond);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #fff;
+}
+
+.cover-logo span {
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+
+.cover-doc-ref {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.1em;
+}
+
+.cover-body {
+  padding: 80px 56px;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cover-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cover-eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--accent);
+}
+
+h1 {
+  font-family: var(--cond);
+  font-size: clamp(64px, 10vw, 120px);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 0.95;
+  color: #fff;
+  margin-bottom: 24px;
+}
+
+.cover-tagline {
+  font-family: var(--sans);
+  font-size: 18px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.55);
+  max-width: 520px;
+  line-height: 1.6;
+  margin-bottom: 48px;
+}
+
+.cover-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 2px;
+  color: rgba(255,255,255,0.6);
+}
+
+.pill.active {
+  border-color: var(--accent);
+  color: #fff;
+  background: rgba(0,87,184,0.2);
+}
+
+.cover-bottom {
+  padding: 24px 56px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.cover-stats {
+  display: flex;
+  gap: 48px;
+}
+
+.stat-val {
+  font-family: var(--cond);
+  font-size: 28px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+}
+
+.cover-class {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.2);
+}
+
+/* ── PAGE LAYOUT ── */
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 72px 56px;
+}
+
+/* ── SECTION HEADERS ── */
+.sec-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.sec-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  padding-top: 6px;
+  min-width: 28px;
+}
+
+.sec-titles {}
+
+h2 {
+  font-family: var(--cond);
+  font-size: 36px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.sec-sub {
+  font-size: 13px;
+  color: var(--ink-3);
+  font-weight: 300;
+}
+
+h3 {
+  font-family: var(--cond);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--ink-2);
+  margin: 36px 0 14px;
+  text-transform: uppercase;
+}
+
+p {
+  color: var(--ink-2);
+  margin-bottom: 18px;
+  max-width: 700px;
+  font-weight: 300;
+}
+
+strong { font-weight: 500; color: var(--ink); }
+
+/* ── DIVIDER ── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 60px 0;
+}
+
+/* ── HIGHLIGHT BOX ── */
+.highlight {
+  background: var(--accent-lt);
+  border-left: 3px solid var(--accent);
+  padding: 20px 24px;
+  margin: 28px 0;
+  border-radius: 0 4px 4px 0;
+}
+
+.highlight p {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--ink);
+  margin: 0;
+  max-width: 100%;
+  font-style: italic;
+}
+
+/* ── DARK CALLOUT ── */
+.callout-dark {
+  background: var(--ink);
+  border-radius: 6px;
+  padding: 36px 40px;
+  margin: 36px 0;
+}
+
+.callout-dark-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.callout-dark p {
+  color: rgba(255,255,255,0.65);
+  max-width: 100%;
+  margin-bottom: 14px;
+  font-size: 15px;
+}
+
+.callout-dark p:last-child { margin-bottom: 0; }
+.callout-dark strong { color: #fff; font-weight: 500; }
+
+/* ── STATUS BADGE ── */
+.badge {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+  font-weight: 500;
+}
+
+.badge-blue  { background: var(--accent-lt); color: var(--accent-2); }
+.badge-green { background: var(--green-lt);  color: var(--green); }
+.badge-warn  { background: var(--warn-lt);   color: var(--warn); }
+.badge-gray  { background: #eef0f4; color: var(--ink-3); }
+
+/* ── ARCH DIAGRAM ── */
+.arch-wrap {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 36px;
+  margin: 28px 0;
+}
+
+.arch-layer-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 8px;
+}
+
+.arch-row {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+  margin-bottom: 8px;
+}
+
+.arch-box {
+  flex: 1;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 12px 16px;
+  background: var(--bg);
+}
+
+.arch-box.blue {
+  border-color: var(--accent);
+  background: var(--accent-lt);
+}
+
+.arch-box.dark {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.arch-box-name {
+  font-family: var(--cond);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+  margin-bottom: 3px;
+  text-transform: uppercase;
+}
+
+.arch-box.blue  .arch-box-name { color: var(--accent-2); }
+.arch-box.dark  .arch-box-name { color: #fff; }
+
+.arch-box-sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-3);
+  line-height: 1.5;
+}
+
+.arch-box.blue  .arch-box-sub { color: var(--accent); }
+.arch-box.dark  .arch-box-sub { color: rgba(255,255,255,0.4); }
+
+.arch-connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 4px 0;
+  padding: 4px 0;
+}
+
+.arch-connector-line {
+  flex: 1;
+  height: 1px;
+  background: var(--rule-2);
+}
+
+.arch-connector-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+/* ── CODE ── */
+.code-wrap {
+  background: #0e1117;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+.code-header {
+  background: #1a1f2e;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #252d3d;
+}
+
+.code-filename {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.05em;
+}
+
+.code-lang {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+pre {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: #cdd6f4;
+  padding: 24px;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.kw  { color: #cba6f7; }
+.ty  { color: #89dceb; }
+.cm  { color: #45475a; font-style: italic; }
+.st  { color: #a6e3a1; }
+.nm  { color: #89b4fa; }
+.op  { color: #94e2d5; }
+.pp  { color: #fab387; }
+
+/* ── CAPABILITY TABLE ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  margin: 20px 0;
+}
+
+thead th {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  font-weight: 400;
+  text-align: left;
+  padding: 10px 16px 10px 0;
+  border-bottom: 2px solid var(--rule);
+}
+
+tbody td {
+  padding: 13px 16px 13px 0;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-2);
+  vertical-align: top;
+  font-weight: 300;
+}
+
+tbody td:first-child {
+  font-weight: 500;
+  color: var(--ink);
+  font-family: var(--cond);
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+tbody tr:last-child td { border-bottom: none; }
+
+tbody tr:hover td { background: var(--bg); }
+
+/* ── MILESTONE TIMELINE ── */
+.timeline {
+  position: relative;
+  margin: 32px 0;
+  padding-left: 28px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: var(--rule);
+}
+
+.tl-item {
+  position: relative;
+  margin-bottom: 32px;
+  padding-left: 24px;
+}
+
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -28px;
+  top: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--rule-2);
+  border: 2px solid var(--surface);
+}
+
+.tl-item.active::before {
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-lt);
+}
+
+.tl-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.tl-title {
+  font-family: var(--cond);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-transform: uppercase;
+}
+
+.tl-body {
+  font-size: 13.5px;
+  color: var(--ink-3);
+  font-weight: 300;
+  line-height: 1.6;
+  max-width: 600px;
+}
+
+/* ── PLATFORM CARDS ── */
+.platform-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.platform-card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 20px;
+  position: relative;
+}
+
+.platform-card.lead {
+  border-color: var(--accent);
+  border-width: 1.5px;
+}
+
+.pc-phase {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 10px;
+}
+
+.pc-name {
+  font-family: var(--cond);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.platform-card.lead .pc-name { color: var(--accent-2); }
+
+.pc-detail {
+  font-size: 12.5px;
+  color: var(--ink-3);
+  line-height: 1.55;
+  font-weight: 300;
+}
+
+.pc-tags {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+/* ── MARKET TABLE ── */
+.market-card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+.market-row {
+  display: grid;
+  grid-template-columns: 180px 1fr auto;
+  gap: 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: center;
+}
+
+.market-row:last-child { border-bottom: none; }
+
+.market-company {
+  padding: 16px 20px;
+  font-family: var(--cond);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-transform: uppercase;
+  border-right: 1px solid var(--rule);
+}
+
+.market-detail {
+  padding: 16px 20px;
+  font-size: 13px;
+  color: var(--ink-3);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.market-fit {
+  padding: 16px 20px;
+  border-left: 1px solid var(--rule);
+  min-width: 100px;
+  text-align: center;
+}
+
+/* ── USP GRID ── */
+.usp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 28px 0;
+}
+
+.usp-card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 24px;
+}
+
+.usp-num {
+  font-family: var(--cond);
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--rule);
+  line-height: 1;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.usp-title {
+  font-family: var(--cond);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+
+.usp-body {
+  font-size: 13px;
+  color: var(--ink-3);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* ── FOOTER ── */
+.doc-footer {
+  background: var(--ink);
+  padding: 28px 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-logo {
+  font-family: var(--cond);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.3);
+}
+
+.footer-meta {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.2);
+  text-align: right;
+  line-height: 1.8;
+}
+
+/* ── TOC ── */
+.toc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 28px 0;
+}
+
+.toc-item {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+}
+
+.toc-item:nth-child(even) { border-right: none; }
+.toc-item:nth-last-child(-n+2) { border-bottom: none; }
+
+.toc-n {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--accent);
+  min-width: 22px;
+}
+
+.toc-t {
+  font-size: 13.5px;
+  color: var(--ink-2);
+  font-weight: 400;
+}
+
+@media (max-width: 680px) {
+  .cover-body { padding: 48px 32px; }
+  .page { padding: 48px 28px; }
+  .cover-stats { gap: 28px; }
+  .cover-top, .cover-bottom { padding: 24px 32px; }
+  .toc-grid { grid-template-columns: 1fr; }
+  .toc-item { border-right: none; }
+  .toc-item:nth-last-child(-n+2) { border-bottom: 1px solid var(--rule); }
+  .toc-item:last-child { border-bottom: none; }
+  .market-row { grid-template-columns: 1fr; }
+  .market-company { border-right: none; border-bottom: 1px solid var(--rule); }
+  .market-fit { border-left: none; border-top: 1px solid var(--rule); }
+  .doc-footer { flex-direction: column; gap: 16px; text-align: center; }
+  h1 { font-size: 64px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════ COVER ══════════════════════ -->
+<div class="cover">
+  <div class="cover-grid"></div>
+  <div class="cover-circle"></div>
+
+  <div class="cover-top">
+    <div class="cover-logo">ORBIS<span>SIM</span></div>
+    <div class="cover-doc-ref">DOC-ORB-WP-001 · REV A · 2026</div>
+  </div>
+
+  <div class="cover-body">
+    <div class="cover-eyebrow">Technical White Paper</div>
+    <h1>ORBIS</h1>
+    <p class="cover-tagline">A platform-agnostic operator training and evaluation system for defense, naval, and autonomous vehicle simulation — built on open standards and modern C++20.</p>
+    <div class="cover-pills">
+      <span class="pill active">Helicopter</span>
+      <span class="pill active">Naval</span>
+      <span class="pill active">UAV</span>
+      <span class="pill">Ground Vehicle</span>
+      <span class="pill">Robotics</span>
+    </div>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="cover-stats">
+      <div>
+        <div class="stat-val">4</div>
+        <div class="stat-label">Platform backends</div>
+      </div>
+      <div>
+        <div class="stat-val">C++20</div>
+        <div class="stat-label">Core language</div>
+      </div>
+      <div>
+        <div class="stat-val">JSBSim</div>
+        <div class="stat-label">Flight dynamics</div>
+      </div>
+      <div>
+        <div class="stat-val">Open</div>
+        <div class="stat-label">Data formats</div>
+      </div>
+    </div>
+    <div class="cover-class">UNCLASSIFIED · COMMERCIAL</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ BODY ══════════════════════ -->
+<div class="page">
+
+  <!-- TOC -->
+  <div class="toc-grid">
+    <div class="toc-item"><span class="toc-n">01</span><span class="toc-t">Executive Summary</span></div>
+    <div class="toc-item"><span class="toc-n">02</span><span class="toc-t">The Problem</span></div>
+    <div class="toc-item"><span class="toc-n">03</span><span class="toc-t">Product Vision</span></div>
+    <div class="toc-item"><span class="toc-n">04</span><span class="toc-t">System Architecture</span></div>
+    <div class="toc-item"><span class="toc-n">05</span><span class="toc-t">Core Components</span></div>
+    <div class="toc-item"><span class="toc-n">06</span><span class="toc-t">Query Engine</span></div>
+    <div class="toc-item"><span class="toc-n">07</span><span class="toc-t">Platform Backends</span></div>
+    <div class="toc-item"><span class="toc-n">08</span><span class="toc-t">Data Schemas</span></div>
+    <div class="toc-item"><span class="toc-n">09</span><span class="toc-t">Differentiators</span></div>
+    <div class="toc-item"><span class="toc-n">10</span><span class="toc-t">Market & Customers</span></div>
+    <div class="toc-item"><span class="toc-n">11</span><span class="toc-t">Development Roadmap</span></div>
+    <div class="toc-item"><span class="toc-n">12</span><span class="toc-t">Technical Specifications</span></div>
+  </div>
+
+  <!-- 01 ── EXECUTIVE SUMMARY -->
+  <div class="sec-header">
+    <span class="sec-num">01</span>
+    <div class="sec-titles">
+      <h2>Executive Summary</h2>
+      <div class="sec-sub">What ORBIS is and why it exists</div>
+    </div>
+  </div>
+
+  <p>ORBIS is a <strong>platform-agnostic operator training and evaluation system</strong> that decouples scenario design, physics simulation, sensor modelling, and after-action analysis into independently replaceable components connected by open XML data formats.</p>
+
+  <p>At its core, ORBIS consists of three products: an <strong>Instructor Operator Station (IOS)</strong> for designing and injecting training scenarios; a <strong>real-time telemetry pipeline</strong> that captures operator and platform state at configurable rates; and a <strong>C++20 range-based query engine</strong> that evaluates performance against scenario criteria and generates structured after-action reports.</p>
+
+  <p>Unlike conventional training simulators — where evaluation logic is hard-coded for one aircraft or vessel type — ORBIS exposes a clean <strong>PlatformModel interface</strong>. Swapping the helicopter backend for a naval vessel or UAV requires implementing one interface. The IOS, query engine, and report layer require zero modification.</p>
+
+  <div class="highlight">
+    <p>"The flight model is a replaceable component. ORBIS is the intelligence layer above it — the system that knows what a good operator looks like, and can prove it with data."</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 02 ── THE PROBLEM -->
+  <div class="sec-header">
+    <span class="sec-num">02</span>
+    <div class="sec-titles">
+      <h2>The Problem</h2>
+      <div class="sec-sub">Why existing training simulators fall short</div>
+    </div>
+  </div>
+
+  <p>Defense and naval training simulators share a fundamental architectural problem: evaluation logic, scenario control, and telemetry analysis are tightly coupled to a single platform. When a contractor builds a helicopter trainer, they build a custom IOS, a custom data format, and custom evaluation criteria. When they build a naval trainer next, they start from scratch.</p>
+
+  <p>Three consequences emerge from this coupling:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Problem</th>
+        <th>Current state</th>
+        <th>ORBIS solution</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Platform lock-in</td>
+        <td>Evaluation logic re-written for each new platform type</td>
+        <td>PlatformModel interface — swap backends, keep everything else</td>
+      </tr>
+      <tr>
+        <td>Rigid evaluation</td>
+        <td>Pass/fail criteria hard-coded at build time by software engineers</td>
+        <td>Composable query engine — instructors define criteria at runtime</td>
+      </tr>
+      <tr>
+        <td>Proprietary data</td>
+        <td>Telemetry in vendor-specific binary formats, not interoperable</td>
+        <td>Open XML schemas — importable into any analysis tool</td>
+      </tr>
+      <tr>
+        <td>Batch-only analysis</td>
+        <td>After-action review only available post-mission</td>
+        <td>Lazy range views — live evaluation during the mission</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr class="divider">
+
+  <!-- 03 ── PRODUCT VISION -->
+  <div class="sec-header">
+    <span class="sec-num">03</span>
+    <div class="sec-titles">
+      <h2>Product Vision</h2>
+      <div class="sec-sub">What ORBIS looks like as a deployed system</div>
+    </div>
+  </div>
+
+  <p>An instructor sits at the ORBIS IOS. She selects a helicopter scenario — Mountain NOE, degraded visibility, partial engine failure at T+120s. She sets wind, cloud ceiling, and the waypoint altitude band she expects the trainee to hold. She clicks <strong>Deploy Scenario</strong>.</p>
+
+  <p>ORBIS writes the scenario XML, initialises the JSBSim Bo 105 flight dynamics model, and begins streaming telemetry at 10Hz. On her second monitor, live metrics update: altitude deviation at each waypoint, rotor RPM trend, reaction time to the engine failure. The query engine runs continuously against the live ring buffer.</p>
+
+  <p>At mission end, ORBIS generates a structured after-action report: waypoint compliance, altitude exceedance events with timestamps, engine response assessment. The report is exportable as XML for integration into a learning management system, or rendered as a formatted HTML document for the debrief.</p>
+
+  <p>Next week the same instructor runs a naval gunnery scenario on a different vessel model. The IOS looks identical. The query engine asks the same structural questions — was the operator within criteria, when did they deviate, how quickly did they recover. Only the platform backend and scenario parameters change.</p>
+
+  <hr class="divider">
+
+  <!-- 04 ── ARCHITECTURE -->
+  <div class="sec-header">
+    <span class="sec-num">04</span>
+    <div class="sec-titles">
+      <h2>System Architecture</h2>
+      <div class="sec-sub">Three independent layers, two open interfaces</div>
+    </div>
+  </div>
+
+  <div class="arch-wrap">
+    <div class="arch-layer-label">Layer 1 — Instructor interface</div>
+    <div class="arch-row">
+      <div class="arch-box blue">
+        <div class="arch-box-name">IOS — Instructor Operator Station</div>
+        <div class="arch-box-sub">Scenario design · parameter injection · live telemetry monitor · report viewer</div>
+      </div>
+    </div>
+
+    <div class="arch-connector">
+      <div class="arch-connector-line"></div>
+      <div class="arch-connector-label">Scenario XML (open schema)</div>
+      <div class="arch-connector-line"></div>
+    </div>
+
+    <div class="arch-layer-label">Layer 2 — Simulation core</div>
+    <div class="arch-row">
+      <div class="arch-box">
+        <div class="arch-box-name">PlatformModel Interface</div>
+        <div class="arch-box-sub">step(dt) · read() → TelemetrySample · inject(FailureEvent)</div>
+      </div>
+      <div class="arch-box">
+        <div class="arch-box-name">Sensor Synthesis</div>
+        <div class="arch-box-sub">Radar alt · EO/IR · noise models · failure injection</div>
+      </div>
+      <div class="arch-box">
+        <div class="arch-box-name">Telemetry Pipeline</div>
+        <div class="arch-box-sub">Ring buffer · 10–50Hz · XML serialisation · ROS2 optional</div>
+      </div>
+    </div>
+
+    <div class="arch-connector">
+      <div class="arch-connector-line"></div>
+      <div class="arch-connector-label">TelemetrySample stream</div>
+      <div class="arch-connector-line"></div>
+    </div>
+
+    <div class="arch-layer-label">Layer 3 — Evaluation & reporting</div>
+    <div class="arch-row">
+      <div class="arch-box blue">
+        <div class="arch-box-name">C++20 Range Query Engine</div>
+        <div class="arch-box-sub">Lazy views · composable filters · phase detection · live + batch modes</div>
+      </div>
+      <div class="arch-box">
+        <div class="arch-box-name">After-Action Report</div>
+        <div class="arch-box-sub">Waypoint analysis · deviation events · XML + HTML output</div>
+      </div>
+    </div>
+
+    <div class="arch-connector">
+      <div class="arch-connector-line"></div>
+      <div class="arch-connector-label">Platform backends (interchangeable)</div>
+      <div class="arch-connector-line"></div>
+    </div>
+
+    <div class="arch-layer-label">Platform backends</div>
+    <div class="arch-row">
+      <div class="arch-box dark">
+        <div class="arch-box-name">Helicopter</div>
+        <div class="arch-box-sub">JSBSim Bo 105</div>
+      </div>
+      <div class="arch-box">
+        <div class="arch-box-name">Naval</div>
+        <div class="arch-box-sub">Ship kinematics</div>
+      </div>
+      <div class="arch-box">
+        <div class="arch-box-name">UAV</div>
+        <div class="arch-box-sub">JSBSim fixed-wing</div>
+      </div>
+      <div class="arch-box">
+        <div class="arch-box-name">Ground</div>
+        <div class="arch-box-sub">Vehicle kinematics</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 05 ── CORE COMPONENTS -->
+  <div class="sec-header">
+    <span class="sec-num">05</span>
+    <div class="sec-titles">
+      <h2>Core Components</h2>
+      <div class="sec-sub">The universal data contract and abstract platform interface</div>
+    </div>
+  </div>
+
+  <h3>TelemetrySample — Universal Data Contract</h3>
+
+  <div class="code-wrap">
+    <div class="code-header">
+      <span class="code-filename">include/orbis/TelemetrySample.hpp</span>
+      <span class="code-lang">C++20</span>
+    </div>
+    <pre><span class="kw">struct</span> <span class="ty">TelemetrySample</span> {
+    <span class="cm">// ── Universal fields — every platform ──────────────────</span>
+    <span class="ty">double</span>      timestamp_sec;
+    <span class="ty">double</span>      latitude_deg;
+    <span class="ty">double</span>      longitude_deg;
+    <span class="ty">double</span>      altitude_m;
+    <span class="ty">double</span>      heading_deg;
+    <span class="ty">double</span>      speed_ms;
+    <span class="ty">double</span>      pitch_deg;
+    <span class="ty">double</span>      roll_deg;
+    <span class="ty">double</span>      yaw_rate_dps;
+
+    <span class="cm">// ── Platform-specific — optional ───────────────────────</span>
+    std::optional&lt;<span class="ty">double</span>&gt; rotor_rpm;         <span class="cm">// helicopter</span>
+    std::optional&lt;<span class="ty">double</span>&gt; engine_torque_pct;  <span class="cm">// helicopter</span>
+    std::optional&lt;<span class="ty">double</span>&gt; fuel_flow_gph;      <span class="cm">// helicopter</span>
+    std::optional&lt;<span class="ty">double</span>&gt; sea_state_douglas;  <span class="cm">// naval</span>
+    std::optional&lt;<span class="ty">double</span>&gt; rudder_angle_deg;   <span class="cm">// naval</span>
+    std::optional&lt;<span class="ty">double</span>&gt; gun_elevation_deg;  <span class="cm">// naval gunnery</span>
+
+    <span class="cm">// ── Synthesised sensor outputs ─────────────────────────</span>
+    std::optional&lt;<span class="ty">double</span>&gt; radar_alt_ft;
+    std::optional&lt;<span class="ty">double</span>&gt; eoir_target_range_m;
+    std::optional&lt;<span class="ty">bool</span>&gt;   eoir_target_locked;
+    std::optional&lt;<span class="ty">double</span>&gt; surface_contact_range_m;
+
+    <span class="cm">// ── Evaluation context ─────────────────────────────────</span>
+    std::string              flight_phase;
+    <span class="ty">bool</span>                     waypoint_reached  = <span class="kw">false</span>;
+    std::vector&lt;std::string&gt; active_failures;
+};</pre>
+  </div>
+
+  <h3>PlatformModel — Abstract Interface</h3>
+
+  <div class="code-wrap">
+    <div class="code-header">
+      <span class="code-filename">include/orbis/PlatformModel.hpp</span>
+      <span class="code-lang">C++20</span>
+    </div>
+    <pre><span class="kw">class</span> <span class="ty">PlatformModel</span> {
+<span class="kw">public</span>:
+    <span class="kw">virtual</span> ~<span class="ty">PlatformModel</span>() = <span class="kw">default</span>;
+
+    <span class="kw">virtual</span> <span class="ty">void</span>            <span class="nm">initialise</span>(<span class="kw">const</span> <span class="ty">ScenarioParams</span>&amp;) = <span class="nm">0</span>;
+    <span class="kw">virtual</span> <span class="ty">void</span>            <span class="nm">step</span>(<span class="ty">double</span> dt_sec)              = <span class="nm">0</span>;
+    <span class="kw">virtual</span> <span class="ty">TelemetrySample</span> <span class="nm">read</span>()                          = <span class="nm">0</span>;
+    <span class="kw">virtual</span> <span class="ty">void</span>            <span class="nm">inject</span>(<span class="kw">const</span> <span class="ty">FailureEvent</span>&amp;)    = <span class="nm">0</span>;
+    <span class="kw">virtual</span> std::string     <span class="nm">platform_type</span>()            <span class="kw">const</span> = <span class="nm">0</span>;
+
+    <span class="cm">// Factory — reads platform type from scenario XML</span>
+    <span class="kw">static</span> std::unique_ptr&lt;<span class="ty">PlatformModel</span>&gt;
+    <span class="nm">create</span>(<span class="kw">const</span> std::string&amp; type, <span class="kw">const</span> <span class="ty">ScenarioParams</span>&amp;);
+};</pre>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 06 ── QUERY ENGINE -->
+  <div class="sec-header">
+    <span class="sec-num">06</span>
+    <div class="sec-titles">
+      <h2>Query Engine</h2>
+      <div class="sec-sub">Composable lazy evaluation over telemetry streams using C++20 ranges</div>
+    </div>
+  </div>
+
+  <p>The ORBIS query engine is built on <code>std::ranges</code> and lazy view composition. Telemetry is held in a <code>std::vector&lt;TelemetrySample&gt;</code> or a live ring buffer. Evaluation queries are composable pipelines that run without copying or materialising intermediate data.</p>
+
+  <p>Because views are lazy, the engine operates identically on a live mission ring buffer — giving the instructor real-time evaluation metrics — and on a post-mission XML log for detailed after-action analysis.</p>
+
+  <div class="code-wrap">
+    <div class="code-header">
+      <span class="code-filename">src/orbis/QueryEngine.cpp — example evaluation queries</span>
+      <span class="code-lang">C++20 ranges</span>
+    </div>
+    <pre><span class="cm">// ── Q1: Altitude compliance at waypoint ─────────────────</span>
+<span class="kw">auto</span> at_alpha = telemetry
+    | std::views::<span class="nm">filter</span>([](auto&amp; s) {
+        <span class="kw">return</span> <span class="nm">geo_distance</span>(s, waypoint_alpha) &lt; <span class="nm">100.0</span>;
+      })
+    | std::views::<span class="nm">filter</span>([](auto&amp; s) {
+        <span class="kw">return</span> s.altitude_m &gt;= <span class="nm">60.0</span> &amp;&amp; s.altitude_m &lt;= <span class="nm">150.0</span>;
+      });
+<span class="ty">bool</span> compliant = !std::ranges::<span class="nm">empty</span>(at_alpha);
+
+<span class="cm">// ── Q2: Cluster low-altitude exceedance events ──────────</span>
+<span class="kw">auto</span> exceedances = telemetry
+    | std::views::<span class="nm">filter</span>([](auto&amp; s) { <span class="kw">return</span> s.altitude_m &lt; <span class="nm">30.0</span>; })
+    | std::views::<span class="nm">chunk_by</span>([](auto&amp; a, auto&amp; b) {
+        <span class="kw">return</span> b.timestamp_sec - a.timestamp_sec &lt; <span class="nm">2.0</span>;
+      });
+
+<span class="cm">// ── Q3: Engine torque trend during approach phase ────────</span>
+<span class="kw">auto</span> approach_torque = telemetry
+    | std::views::<span class="nm">filter</span>([](auto&amp; s) {
+        <span class="kw">return</span> s.flight_phase == <span class="st">"approach"</span>;
+      })
+    | std::views::<span class="nm">transform</span>([](auto&amp; s) {
+        <span class="kw">return</span> s.engine_torque_pct.value_or(<span class="nm">0.0</span>);
+      });
+
+<span class="cm">// ── Q4: Naval — sustained contacts within 5 nm ──────────</span>
+<span class="kw">auto</span> threats = telemetry
+    | std::views::<span class="nm">filter</span>([](auto&amp; s) {
+        <span class="kw">return</span> s.surface_contact_range_m
+                   .transform([](auto r) { <span class="kw">return</span> r &lt; <span class="nm">9260.0</span>; })
+                   .value_or(<span class="kw">false</span>);
+      })
+    | std::views::<span class="nm">chunk_by</span>(<span class="nm">time_contiguous</span>(<span class="nm">30.0</span>));</pre>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 07 ── PLATFORM BACKENDS -->
+  <div class="sec-header">
+    <span class="sec-num">07</span>
+    <div class="sec-titles">
+      <h2>Platform Backends</h2>
+      <div class="sec-sub">Interchangeable physics models behind a single interface</div>
+    </div>
+  </div>
+
+  <div class="platform-grid">
+    <div class="platform-card lead">
+      <div class="pc-phase">Phase 1 — Active</div>
+      <div class="pc-name">Helicopter</div>
+      <div class="pc-detail">JSBSim Bo 105 flight dynamics. PID autopilot flies scripted waypoint routes. Rotor RPM, torque, blade pitch, fuel flow. Radar altimeter and EO/IR sensor synthesis. Bundeswehr-relevant airframe.</div>
+      <div class="pc-tags">
+        <span class="badge badge-blue">JSBSim</span>
+        <span class="badge badge-green">Active</span>
+      </div>
+    </div>
+    <div class="platform-card">
+      <div class="pc-phase">Phase 2</div>
+      <div class="pc-name">Naval vessel</div>
+      <div class="pc-detail">6-DOF ship kinematics. Sea state and wave response modelling. Surface search radar contact synthesis. Track management queries. Relevant for Rheinmetall Naval and TKMS programs.</div>
+      <div class="pc-tags">
+        <span class="badge badge-warn">Planned</span>
+      </div>
+    </div>
+    <div class="platform-card">
+      <div class="pc-phase">Phase 3</div>
+      <div class="pc-name">Fixed-wing UAV</div>
+      <div class="pc-detail">JSBSim fixed-wing model. Long-endurance ISR mission profiles. Sensor gimbal pointing geometry. EO/IR target detection and handoff evaluation.</div>
+      <div class="pc-tags">
+        <span class="badge badge-gray">Roadmap</span>
+      </div>
+    </div>
+    <div class="platform-card">
+      <div class="pc-phase">Phase 4</div>
+      <div class="pc-name">Ground vehicle</div>
+      <div class="pc-detail">Wheeled and tracked vehicle kinematics. Terrain following. Gunner station evaluation scenarios. Relevant for Rheinmetall Landsysteme and KMW simulation programs.</div>
+      <div class="pc-tags">
+        <span class="badge badge-gray">Roadmap</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 08 ── DATA SCHEMAS -->
+  <div class="sec-header">
+    <span class="sec-num">08</span>
+    <div class="sec-titles">
+      <h2>Data Schemas</h2>
+      <div class="sec-sub">Open XML formats for scenario definition and telemetry logging</div>
+    </div>
+  </div>
+
+  <h3>Scenario XML — IOS output</h3>
+  <div class="code-wrap">
+    <div class="code-header">
+      <span class="code-filename">scenarios/HEL-001_mountain_noe.xml</span>
+      <span class="code-lang">XML</span>
+    </div>
+    <pre><span class="op">&lt;scenario</span> id=<span class="st">"HEL-001"</span> version=<span class="st">"1.0"</span><span class="op">&gt;</span>
+  <span class="op">&lt;metadata&gt;</span>
+    <span class="op">&lt;name&gt;</span>Mountain NOE — Exercise Alpha<span class="op">&lt;/name&gt;</span>
+    <span class="op">&lt;platform</span> type=<span class="st">"helicopter"</span> model=<span class="st">"bo105"</span><span class="op">/&gt;</span>
+    <span class="op">&lt;duration-sec&gt;</span>600<span class="op">&lt;/duration-sec&gt;</span>
+    <span class="op">&lt;telemetry-rate-hz&gt;</span>10<span class="op">&lt;/telemetry-rate-hz&gt;</span>
+  <span class="op">&lt;/metadata&gt;</span>
+  <span class="op">&lt;initial-conditions&gt;</span>
+    <span class="op">&lt;latitude&gt;</span>47.6710<span class="op">&lt;/latitude&gt;</span>
+    <span class="op">&lt;longitude&gt;</span>9.5115<span class="op">&lt;/longitude&gt;</span>   <span class="cm">&lt;!-- Friedrichshafen area --&gt;</span>
+    <span class="op">&lt;altitude-ft&gt;</span>1500<span class="op">&lt;/altitude-ft&gt;</span>
+    <span class="op">&lt;heading-deg&gt;</span>270<span class="op">&lt;/heading-deg&gt;</span>
+  <span class="op">&lt;/initial-conditions&gt;</span>
+  <span class="op">&lt;environment&gt;</span>
+    <span class="op">&lt;wind-speed-kt&gt;</span>15<span class="op">&lt;/wind-speed-kt&gt;</span>
+    <span class="op">&lt;visibility-m&gt;</span>3000<span class="op">&lt;/visibility-m&gt;</span>
+    <span class="op">&lt;turbulence&gt;</span>0.3<span class="op">&lt;/turbulence&gt;</span>
+    <span class="op">&lt;cloud-ceiling-ft&gt;</span>800<span class="op">&lt;/cloud-ceiling-ft&gt;</span>
+  <span class="op">&lt;/environment&gt;</span>
+  <span class="op">&lt;failures&gt;</span>
+    <span class="op">&lt;failure</span> trigger=<span class="st">"time"</span> at-sec=<span class="st">"120"</span><span class="op">&gt;</span>
+      <span class="op">&lt;system&gt;</span>engine<span class="op">&lt;/system&gt;</span>
+      <span class="op">&lt;severity&gt;</span>partial<span class="op">&lt;/severity&gt;</span>
+    <span class="op">&lt;/failure&gt;</span>
+  <span class="op">&lt;/failures&gt;</span>
+  <span class="op">&lt;waypoints&gt;</span>
+    <span class="op">&lt;waypoint</span> id=<span class="st">"WP-ALPHA"</span><span class="op">&gt;</span>
+      <span class="op">&lt;latitude&gt;</span>47.690<span class="op">&lt;/latitude&gt;</span>
+      <span class="op">&lt;longitude&gt;</span>9.480<span class="op">&lt;/longitude&gt;</span>
+      <span class="op">&lt;criteria&gt;</span>
+        <span class="op">&lt;altitude-min-ft&gt;</span>200<span class="op">&lt;/altitude-min-ft&gt;</span>
+        <span class="op">&lt;altitude-max-ft&gt;</span>500<span class="op">&lt;/altitude-max-ft&gt;</span>
+        <span class="op">&lt;speed-max-kt&gt;</span>90<span class="op">&lt;/speed-max-kt&gt;</span>
+      <span class="op">&lt;/criteria&gt;</span>
+    <span class="op">&lt;/waypoint&gt;</span>
+  <span class="op">&lt;/waypoints&gt;</span>
+<span class="op">&lt;/scenario&gt;</span></pre>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 09 ── DIFFERENTIATORS -->
+  <div class="sec-header">
+    <span class="sec-num">09</span>
+    <div class="sec-titles">
+      <h2>Key Differentiators</h2>
+      <div class="sec-sub">What makes ORBIS technically distinct</div>
+    </div>
+  </div>
+
+  <div class="usp-grid">
+    <div class="usp-card">
+      <div class="usp-num">01</div>
+      <div class="usp-title">Platform agnostic by design</div>
+      <div class="usp-body">One PlatformModel interface. Helicopter, naval, UAV, and ground vehicle backends are interchangeable. IOS and query engine require zero modification between platforms.</div>
+    </div>
+    <div class="usp-card">
+      <div class="usp-num">02</div>
+      <div class="usp-title">Live + batch evaluation</div>
+      <div class="usp-body">C++20 lazy range views operate identically on a live ring buffer during a mission and on a post-mission telemetry log. Instructors see real-time performance metrics without batch overhead.</div>
+    </div>
+    <div class="usp-card">
+      <div class="usp-num">03</div>
+      <div class="usp-title">Open data formats</div>
+      <div class="usp-body">Scenario and telemetry XML schemas are fully open and documented. Data is importable into Python, MATLAB, or any learning management system without vendor-specific tooling.</div>
+    </div>
+    <div class="usp-card">
+      <div class="usp-num">04</div>
+      <div class="usp-title">Industry-grade flight model</div>
+      <div class="usp-body">JSBSim flight dynamics — the same engine used by NASA, the USAF, and as the physics core of FlightGear. Not a toy model. Aerodynamic coefficients from real aircraft data.</div>
+    </div>
+    <div class="usp-card">
+      <div class="usp-num">05</div>
+      <div class="usp-title">Composable sensor synthesis</div>
+      <div class="usp-body">Radar altimeter, EO/IR boresight, and surface search radar are modelled as separate synthesised outputs on top of the flight dynamics — the same architectural separation HENSOLDT uses in Simsphere.</div>
+    </div>
+    <div class="usp-card">
+      <div class="usp-num">06</div>
+      <div class="usp-title">ROS2 compatible</div>
+      <div class="usp-body">Optional ROS2 publisher outputs telemetry as nav_msgs/Odometry topics. ORBIS scenarios can drive robotics simulation environments, making the platform directly relevant to autonomous systems validation.</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 10 ── MARKET -->
+  <div class="sec-header">
+    <span class="sec-num">10</span>
+    <div class="sec-titles">
+      <h2>Market & Target Customers</h2>
+      <div class="sec-sub">Primary defense and simulation industry targets</div>
+    </div>
+  </div>
+
+  <div class="market-card">
+    <div class="market-row">
+      <div class="market-company">Reiser Simulation</div>
+      <div class="market-detail">Full-mission simulator manufacturer. ORBIS directly mirrors their IOS-to-simulator architecture. A candidate who built ORBIS has already reverse-engineered their product stack from first principles.</div>
+      <div class="market-fit"><span class="badge badge-green">Direct fit</span></div>
+    </div>
+    <div class="market-row">
+      <div class="market-company">HENSOLDT</div>
+      <div class="market-detail">Simulation Solutions division in Immenstaad. ORBIS sensor synthesis layer maps directly to Simsphere radar and EO/IR simulation architecture. Platform-agnostic IOS matches their multi-platform training product strategy.</div>
+      <div class="market-fit"><span class="badge badge-green">Direct fit</span></div>
+    </div>
+    <div class="market-row">
+      <div class="market-company">Thales Group</div>
+      <div class="market-detail">Helicopter crew trainer and naval simulation programs. JSBSim is an industry-recognised flight model. ORBIS architecture mirrors Thales's own simulator middleware pattern.</div>
+      <div class="market-fit"><span class="badge badge-green">Direct fit</span></div>
+    </div>
+    <div class="market-row">
+      <div class="market-company">Rheinmetall Naval</div>
+      <div class="market-detail">Naval training systems and combat management simulation. ORBIS naval backend extension — ship kinematics, surface radar, contact tracking queries — directly targets this market.</div>
+      <div class="market-fit"><span class="badge badge-blue">Strong fit</span></div>
+    </div>
+    <div class="market-row">
+      <div class="market-company">CAE Defense</div>
+      <div class="market-detail">JSBSim-derived flight models are standard in CAE's simulation portfolio. C++20 codebase and open XML formats align with their integration requirements.</div>
+      <div class="market-fit"><span class="badge badge-blue">Strong fit</span></div>
+    </div>
+    <div class="market-row">
+      <div class="market-company">Robotics & Autonomy</div>
+      <div class="market-detail">PlatformModel interface maps directly to robot hardware abstraction layers. ROS2 publisher bridges defense simulation and autonomous systems validation. Relevant for ESA, Airbus Defence, and autonomous vehicle programs.</div>
+      <div class="market-fit"><span class="badge badge-warn">Adjacent</span></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 11 ── ROADMAP -->
+  <div class="sec-header">
+    <span class="sec-num">11</span>
+    <div class="sec-titles">
+      <h2>Development Roadmap</h2>
+      <div class="sec-sub">12-weekend build plan from core slice to multi-platform demo</div>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item active">
+      <div class="tl-header">
+        <span class="tl-title">Milestone 1 — Core slice</span>
+        <span class="badge badge-green">Weekends 1–2</span>
+      </div>
+      <div class="tl-body">JSBSim Bo 105 integration. PID autopilot flying a 3-waypoint route. TelemetrySample struct. XML writer. One range-view query — altitude compliance at waypoints. Plain text report output. End-to-end pipeline proven.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-header">
+        <span class="tl-title">Milestone 2 — Sensor synthesis</span>
+        <span class="badge badge-blue">Weekends 3–4</span>
+      </div>
+      <div class="tl-body">Radar altimeter model with Gaussian noise. EO/IR boresight geometry and target detection logic. Engine failure injection via FailureEvent interface. Sensor outputs written to telemetry XML.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-header">
+        <span class="tl-title">Milestone 3 — IOS application</span>
+        <span class="badge badge-blue">Weekends 5–6</span>
+      </div>
+      <div class="tl-body">Qt desktop IOS UI. Scenario designer panels: initial conditions, environment, waypoints, failure injection. Scenario XML generation. Live telemetry monitor with real-time parameter display.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-header">
+        <span class="tl-title">Milestone 4 — Full query engine</span>
+        <span class="badge badge-blue">Weekends 7–8</span>
+      </div>
+      <div class="tl-body">Complete range-view query library. Phase detection, deviation event clustering, waypoint compliance scoring, engine response assessment. HTML after-action report generation. Live ring buffer evaluation mode.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-header">
+        <span class="tl-title">Milestone 5 — Naval backend</span>
+        <span class="badge badge-warn">Weekends 9–10</span>
+      </div>
+      <div class="tl-body">NavalVesselModel implementing PlatformModel interface. Ship kinematics with sea state effects. Surface search radar contact synthesis. Naval scenario XML schema. Contact tracking query examples.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-header">
+        <span class="tl-title">Milestone 6 — Demo & integrations</span>
+        <span class="badge badge-gray">Weekends 11–12</span>
+      </div>
+      <div class="tl-body">FlightGear visual frontend — cockpit render driven by JSBSim state over socket. Optional ROS2 telemetry publisher. GitHub repository, README, architecture documentation, demo video.</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 12 ── TECH SPECS -->
+  <div class="sec-header">
+    <span class="sec-num">12</span>
+    <div class="sec-titles">
+      <h2>Technical Specifications</h2>
+      <div class="sec-sub">Stack, dependencies, and performance targets</div>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Specification</th><th>Detail</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Core language</td><td>C++20 — ranges, concepts, std::optional, structured bindings</td></tr>
+      <tr><td>Flight dynamics</td><td>JSBSim (NASA/USAF grade) — Bo 105, EC135, fixed-wing models</td></tr>
+      <tr><td>Build system</td><td>CMake 3.20+ with FetchContent for JSBSim</td></tr>
+      <tr><td>IOS framework</td><td>Qt6 — cross-platform desktop application</td></tr>
+      <tr><td>XML parsing</td><td>pugixml — scenario and telemetry schema read/write</td></tr>
+      <tr><td>Telemetry rate</td><td>10Hz standard · 50Hz high-fidelity mode</td></tr>
+      <tr><td>Query latency</td><td>&lt;1ms per query pass on 10-minute telemetry log (lazy evaluation)</td></tr>
+      <tr><td>Visual frontend</td><td>FlightGear 2020.3+ via external FDM socket protocol</td></tr>
+      <tr><td>Optional output</td><td>ROS2 Humble — nav_msgs/Odometry publisher</td></tr>
+      <tr><td>Platform</td><td>Linux (primary) · Windows via WSL2 · macOS</td></tr>
+      <tr><td>Report formats</td><td>XML (machine-readable) · HTML (human debrief)</td></tr>
+      <tr><td>Licence</td><td>MIT — open for integration into commercial programs</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout-dark">
+    <div class="callout-dark-label">Interview talking points — what to say and when</div>
+    <p><strong>"The flight model is behind a clean PlatformModel interface. I could swap JSBSim for your in-house dynamics model in an afternoon — the IOS, query engine, and report layer don't change."</strong></p>
+    <p><strong>"The query engine uses C++20 lazy range views so it runs identically on a live ring buffer during the mission and on a post-mission log. The instructor sees real-time evaluation without any batch processing overhead."</strong></p>
+    <p><strong>"I designed the sensor synthesis layer as a separate component on top of the flight dynamics — the same architectural decision HENSOLDT makes with Simsphere. The radar altimeter is a model, not a measurement."</strong></p>
+    <p><strong>"The naval backend took one extra weekend because the PlatformModel interface was already there. That's the point — the evaluation framework doesn't know or care what platform it's running on."</strong></p>
+    <p><strong>"I started this after visiting Reiser's simulator. I wanted to understand what I'd actually be building, not just read about it."</strong></p>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <div class="footer-logo">ORBISSIM</div>
+  <div class="footer-meta">
+    DOC-ORB-WP-001 · REVISION A<br>
+    PLATFORM-AGNOSTIC OPERATOR TRAINING SYSTEM<br>
+    UNCLASSIFIED · COMMERCIAL
+  </div>
+</div>
+
+</body>
+</html>

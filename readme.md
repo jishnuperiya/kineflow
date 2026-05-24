@@ -1,8 +1,6 @@
 # Sentinex | State Estimation & Sensor Simulation Lab
 
-Sentinex is a C++20 codebase for vehicle state propagation and estimation experiments, with an initial focus on clear contracts, deterministic behavior, and testable invariants.
-
-The project currently provides a minimal, well-defined kinematic bicycle motion model and supporting infrastructure, intended as a foundation for future simulation and state-estimation work.
+real-time system monitoring and data visualization toolkit with Qt6. It monitors CPU, memory, network, and disk I/O with a responsive multi-plot dashboard. The architecture separates data collection from visualization, making it easy to add new metrics or extend to other domains.
 
 Generated documentation:
 https://jishnuperiya.github.io/sentinex/
