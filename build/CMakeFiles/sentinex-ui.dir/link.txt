@@ -1,0 +1,2 @@
+/usr/bin/ar qc libsentinex-ui.a "CMakeFiles/sentinex-ui.dir/sentinex-ui_autogen/mocs_compilation.cpp.o"
+/usr/bin/ranlib libsentinex-ui.a

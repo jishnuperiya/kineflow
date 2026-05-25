@@ -1,0 +1,2 @@
+/usr/bin/ar qc libsentinex-system-monitor.a "CMakeFiles/sentinex-system-monitor.dir/sentinex-system-monitor_autogen/mocs_compilation.cpp.o"
+/usr/bin/ranlib libsentinex-system-monitor.a

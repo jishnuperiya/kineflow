@@ -1,0 +1,2 @@
+/usr/bin/ar qc libsentinex-legacy.a "CMakeFiles/sentinex-legacy.dir/sentinex-legacy_autogen/mocs_compilation.cpp.o"
+/usr/bin/ranlib libsentinex-legacy.a
