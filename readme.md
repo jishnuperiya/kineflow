@@ -1,9 +1,22 @@
-# Sentinex | State Estimation & Sensor Simulation Lab
+# Kineflow
 
-real-time system monitoring and data visualization toolkit with Qt6. It monitors CPU, memory, network, and disk I/O with a responsive multi-plot dashboard. The architecture separates data collection from visualization, making it easy to add new metrics or extend to other domains.
+<p align="center">
+  <img src="docs/logo.svg" alt="Kineflow" width="400"/>
+</p>
 
-Generated documentation:
-https://jishnuperiya.github.io/sentinex/
+<p align="center">
+  <strong>Open-source, lightweight alternative to ADTF for real-time data pipelines.</strong>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License"/>
+  <img src="https://img.shields.io/badge/C%2B%2B-20-blue.svg" alt="C++20"/>
+  <img src="https://img.shields.io/badge/status-early%20development-orange.svg" alt="Status"/>
+</p>
+
+> **⚠️ Notice:** Sentinex is being redesigned and rebranded as **Kineflow** — an open-source, lightweight C++20 alternative to ADTF for real-time data pipelines in automotive and robotics. This repository will be archived once Kineflow reaches its first stable release. Follow the progress at [github.com/jishnuperiya/kineflow](https://github.com/jishnuperiya/kineflow).
+
+---
 
 ## Prerequisites
 
@@ -12,31 +25,44 @@ https://jishnuperiya.github.io/sentinex/
 ```bash
 sudo port install clang-20 cmake doxygen
 ```
+
+---
+
 ## Building
 
-    mkdir .bld
-    cd .bld
-    cmake ..
-    make -j
+```bash
+mkdir .bld
+cd .bld
+cmake ..
+make -j
+```
 
 Also:
 
-    make help
+```bash
+make help
+```
 
-to see a list of possible of build targets.
+to see a list of possible build targets.
+
+---
 
 ## Running
 
 Run the test and experimentation harness:
 
-    ./sentinex-test
+```bash
+./sentinex-test
+```
 
 Run the reference CLI executable:
 
-    ./sentinex-cli
+```bash
+./sentinex-cli
+```
 
+---
 
-# Contributors
+## Contributors
 
 - jishnuperiya@gmail.com
-- jonathon.bell@gmail.com
