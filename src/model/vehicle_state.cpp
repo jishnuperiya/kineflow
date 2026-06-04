@@ -1,7 +1,7 @@
 
 #include "vehicle_state.hpp"
 
-namespace sentinex::estimation{
+namespace kineflow::estimation{
 
 std::ostream& operator<<(std::ostream& os, const vehicle_state& s)
 {

@@ -1,4 +1,4 @@
-﻿//******** Copyright � 2026 Jishnu Periya, Jonathon Bell. All rights reserved.
+﻿//******** Copyright � 2026 Jishnu Periya. All rights reserved.
 //*
 //*
 //*  Version : $Header:$
@@ -17,7 +17,7 @@
 //****************************************************************************
 
 
-namespace sentinex::estimation
+namespace kineflow::estimation
 {
   //****************************************************************************
 
@@ -59,7 +59,7 @@ namespace sentinex::estimation
 
 
   //****************************************************************************
-} // namespace sentinex::estimation
+} // namespace kineflow::estimation
 //****************************************************************************
 
 

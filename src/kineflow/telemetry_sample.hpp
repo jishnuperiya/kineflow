@@ -4,7 +4,7 @@
 //*  Version : $Header:$
 //*
 //*
-//*  Purpose : Universal telemetry data contract for SENTINEX.
+//*  Purpose : Universal telemetry data contract for kineflow.
 //*            Produced by every platform backend via platform_model::read().
 //*            Consumed by the telemetry pipeline, query engine, and report
 //*            generator. Platform-specific fields use std::optional — empty
@@ -25,7 +25,7 @@
 
 //****************************************************************************
 
-namespace sentinex::telemetry
+namespace kineflow::telemetry
 {
 
 //****************************************************************************
@@ -182,5 +182,5 @@ struct telemetry_sample
 };
 
 //****************************************************************************
-} // namespace sentinex::telemetry
+} // namespace kineflow::telemetry
 //****************************************************************************

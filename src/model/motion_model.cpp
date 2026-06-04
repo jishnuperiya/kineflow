@@ -1,4 +1,4 @@
-﻿//******** Copyright   2026 Jishnu Periya, Jonathon Bell. All rights reserved.
+﻿//******** Copyright   2026 Jishnu Periya. All rights reserved.
 //*
 //*
 //*  Version : $Header:$
@@ -12,12 +12,12 @@
 
 #include <cassert>                    // for assert
 #include <cmath>                      // for std::atan, std::tan, std::cos, std::sin, std::isfinite
-#include "vehicle_state.hpp"          // for sentinex::estimation::VehicleState
-#include "motion_command.hpp"         // for sentinex::model::MotionCommands
+#include "vehicle_state.hpp"          // for kineflow::estimation::VehicleState
+#include "motion_command.hpp"         // for kineflow::model::MotionCommands
 
 #include "motion_model.hpp"
 //****************************************************************************
-namespace sentinex::model
+namespace kineflow::model
 {
   //****************************************************************************
 
@@ -39,7 +39,7 @@ namespace sentinex::model
     * @param motion_command       Longitudinal velocity command [m/s] & Front wheel steering angle [rad]
     * @param vehicle_state        Vehicle state
     */
-  estimation::vehicle_state model::motion_model::propagate(const estimation::vehicle_state& state, const motion_command& cmd, double dt) const
+  estimation::vehicle_state model::bicycle_model::propagate(const estimation::vehicle_state& state, const motion_command& cmd, double dt) const
   {
     assert(dt >= 0.0 && "Time step must be positive");
     assert(std::isfinite(cmd.velocity_cmd) && "Velocity must be finite");
@@ -69,7 +69,7 @@ namespace sentinex::model
   */
 
   
-  double model::motion_model::normalize_angle(double angle)
+  double model::bicycle_model::normalize_angle(double angle)
   {
     return std::atan2(std::sin(angle), std::cos(angle));
   }

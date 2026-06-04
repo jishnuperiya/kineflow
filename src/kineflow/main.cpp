@@ -33,14 +33,9 @@
 
 int main()
 {
-  std::cout << "\n";
-  std::cout << "================================================\n";
-  std::cout << "  SENTINEX — Simulation Pipeline  Milestone 1  \n";
-  std::cout << "  Platform: Ground Vehicle (Bicycle Model)      \n";
-  std::cout << "================================================\n\n";
 
   // ── 1. Scenario parameters ───────────────────────────────────────────────
-  sentinex::platform::scenario_params params;
+  kineflow::platform::scenario_params params;
   params.latitude_deg      = 47.6710;
   params.longitude_deg     = 9.5115;
   params.altitude_m        = 0.0;
@@ -50,7 +45,7 @@ int main()
   params.duration_sec      = 30.0;
 
   // ── 2. Platform backend ──────────────────────────────────────────────────
-  auto platform = std::make_unique<sentinex::platform::ground_vehicle_model>();
+  auto platform = std::make_unique<kineflow::platform::ground_vehicle_model>();
   platform->initialise(params);
 
   std::cout << "Platform : " << platform->platform_type() << "\n";
@@ -60,12 +55,12 @@ int main()
   std::cout << "Duration : " << params.duration_sec << " s\n\n";
 
   // ── 3. Telemetry sinks ───────────────────────────────────────────────────
-  std::vector<std::unique_ptr<sentinex::telemetry::telemetry_sink>> sinks;
-  sinks.push_back(std::make_unique<sentinex::telemetry::console_sink>(10));
-  sinks.push_back(std::make_unique<sentinex::telemetry::csv_sink>("mission_log.csv"));
+  std::vector<std::unique_ptr<kineflow::telemetry::telemetry_sink>> sinks;
+  sinks.push_back(std::make_unique<kineflow::telemetry::console_sink>(10));
+  sinks.push_back(std::make_unique<kineflow::telemetry::csv_sink>("mission_log.csv"));
 
   // ── 4. Failure event ─────────────────────────────────────────────────────
-  sentinex::platform::failure_event engine_fail;
+  kineflow::platform::failure_event engine_fail;
   engine_fail.system      = "engine";
   engine_fail.severity    = "partial";
   engine_fail.trigger_sec = 15.0;
