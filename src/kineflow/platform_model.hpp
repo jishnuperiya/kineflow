@@ -25,7 +25,7 @@
 
 //****************************************************************************
 
-namespace sentinex::platform
+namespace kineflow::platform
 {
 
 //****************************************************************************
@@ -158,7 +158,7 @@ public:
    * @brief Read the current platform state as a telemetry sample.
    * Called after every step().
    */
-  virtual telemetry::telemetry_sample read() const = 0;
+  virtual kineflow::telemetry::telemetry_sample read() const = 0;
 
   /**
    * @brief Inject a failure event into the platform.
@@ -200,5 +200,5 @@ public:
 
 
 //****************************************************************************
-} // namespace sentinex::platform
+} // namespace kineflow::platform
 //****************************************************************************

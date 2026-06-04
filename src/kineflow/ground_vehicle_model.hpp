@@ -29,7 +29,7 @@
 
 //****************************************************************************
 
-namespace sentinex::platform
+namespace kineflow::platform
 {
 
 //****************************************************************************
@@ -96,9 +96,9 @@ public:
    * Read current state as a telemetry_sample.
    * Converts local Cartesian → WGS84, radians → degrees.
    */
-  telemetry::telemetry_sample read() const override
+  kineflow::telemetry::telemetry_sample read() const override
   {
-    telemetry::telemetry_sample s;
+    kineflow::telemetry::telemetry_sample s;
 
     s.timestamp_sec  = timestamp_sec_;
     s.latitude_deg   = local_to_lat(state_.y);
@@ -171,8 +171,8 @@ private:
     return deg;
   }
 
-  model::motion_model           model_;              ///< Bicycle model physics
-  estimation::vehicle_state     state_;              ///< Current local Cartesian state
+  kineflow::model::bicycle_model          model_;              ///< Bicycle model physics
+  kineflow::estimation::vehicle_state     state_;              ///< Current local Cartesian state
   double                        origin_lat_deg_ = 47.6710; ///< WGS84 origin latitude (Friedrichshafen)
   double                        origin_lon_deg_ = 9.5115;  ///< WGS84 origin longitude (Friedrichshafen) 
   double                        speed_ms_       = 0.0;     ///< Commanded speed [m/s]
@@ -181,8 +181,8 @@ private:
   std::vector<std::string>      active_failures_;           ///< Active failure IDs
 
   static constexpr double wheel_radius_m_ = 0.5; ///< Assumed wheel radius [m]
-};
+}; // class ground_vehicle_model
 
 //****************************************************************************
-} // namespace sentinex::platform
+} // namespace kineflow::platform
 //****************************************************************************

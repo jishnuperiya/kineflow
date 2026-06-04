@@ -1,4 +1,4 @@
-﻿//******** Copyright   2026 Jishnu Periya, Jonathon Bell. All rights reserved.
+﻿//******** Copyright   2026 Jishnu Periya. All rights reserved.
 //*
 //*
 //*  Version : $Header:$
@@ -14,18 +14,18 @@
 
 #include <cassert>                    // for assert
 #include <cmath>                      // for std::atan, std::tan, std::cos, std::sin, std::isfinite
-#include "vehicle_state.hpp"          // for sentinex::estimation::VehicleState
-#include "motion_command.hpp"         // for sentinex::model::MotionCommands
+#include "vehicle_state.hpp"          // for kineflow::estimation::vehicle_state
+#include "motion_command.hpp"         // for kineflow::model::motion_command
 
 //****************************************************************************
-namespace sentinex::model{
+namespace kineflow::model{
 //****************************************************************************
 
  /**
  * Represents a stateless mathematical model for planar vehicle motion.
  *
  */
-  class motion_model
+  class bicycle_model
   {
   public:
     /**
@@ -33,21 +33,21 @@ namespace sentinex::model{
      *
      * @param wheelbase Distance between front and rear axle [m]
      */
-    explicit motion_model(double wheelbase = 4.0)
+    explicit bicycle_model(double wheelbase = 4.0)
       : wheelbase_(wheelbase)
     {
     }
 
-    motion_model(const motion_model&) = default;
-    motion_model& operator=(const motion_model&) = delete;
-    motion_model(motion_model&&) = delete;
-    motion_model& operator=(motion_model&& ) = delete;
+    bicycle_model(const bicycle_model&) = default;
+    bicycle_model& operator=(const bicycle_model&) = delete;
+    bicycle_model(bicycle_model&&) = delete;
+    bicycle_model& operator=(bicycle_model&& ) = delete;
 
     /**
     * @brief Propagates the vehicle state forward in time using a kinematic
     *        bicycle model.
     */
-    estimation::vehicle_state propagate(const estimation::vehicle_state& state, const motion_command& cmd, double dt) const;
+    kineflow::estimation::vehicle_state propagate(const kineflow::estimation::vehicle_state& state, const motion_command& cmd, double dt) const;
 
   private:
     /**
