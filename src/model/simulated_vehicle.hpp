@@ -12,12 +12,12 @@
 #pragma once
 //****************************************************************************
 
-#include "vehicle_state.hpp"          // for sentinex::estimation::VehicleState
-#include "motion_command.hpp"         // for sentinex::model::MotionCommands
-#include "motion_model.hpp"           // for sentinex::model::motion_model
+#include "vehicle_state.hpp"          // for kineflow::estimation::VehicleState
+#include "motion_command.hpp"         // for kineflow::model::MotionCommands
+#include "motion_model.hpp"           // for kineflow::model::motion_model
 
 //****************************************************************************
-namespace sentinex::model {
+namespace kineflow::model {
 //****************************************************************************
 class SimulatedVehicle
 {
@@ -54,9 +54,9 @@ public:
   }
 
 private:
-  model::motion_model model_;
+  bicycle_model model_;
   estimation::vehicle_state state_;
 };
 
 //****************************************************************************
-} // namespace sentinex::model
+} // namespace kineflow::model
