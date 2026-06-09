@@ -1,2 +1,0 @@
-/usr/bin/ar qc libsentinex-core.a "CMakeFiles/sentinex-core.dir/src/model/vehicle_state.cpp.o" "CMakeFiles/sentinex-core.dir/src/model/motion_model.cpp.o"
-/usr/bin/ranlib libsentinex-core.a

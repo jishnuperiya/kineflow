@@ -1,1 +1,0 @@
-/usr/bin/c++ -g "CMakeFiles/sentinex-sim.dir/src/sentinex/main.cpp.o" -o sentinex-sim  libsentinex-core.a 
