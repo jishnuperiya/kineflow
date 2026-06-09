@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <vector>
 
 namespace kineflow::pipeline
 {
@@ -28,25 +29,24 @@ class in_pin
 };
 
 
-
 template<typename T>
 class out_pin
 {
   public:
     void connect(in_pin<T>& in)
     {
-      connected_pin_ = &in;
+      connected_pins_.push_back(&in);
     }
-    void disconnect()
-    {
-      connected_pin_ = nullptr;
-    }
+
     void write(std::shared_ptr<const T> sample)
     {
-      if (connected_pin_)
-        connected_pin_->receive(sample);
+      for(auto* pin: connected_pins_)
+      {
+        pin->receive(sample);
+      }
     }
   private:
-    in_pin<T>* connected_pin_ = nullptr;        
+    std::vector<in_pin<T>*> connected_pins_;
 };
+
 } // namespace kineflow::pipeline

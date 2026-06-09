@@ -11,9 +11,14 @@ int main()
   std::cout << "Hello, kineflow!\n";
   filter_graph graph;
 
-  auto& source = graph.add(std::make_unique<dot_source>());
-  auto& printer = graph.add(std::make_unique<dot_printer>());
-  source.out_.connect(printer.in_);
+  auto& slow_dot = graph.add(std::make_unique<dot_source>(0.5));
+  auto& fast_dot = graph.add(std::make_unique<dot_source>(1.0));
+  
+  auto& printer1 = graph.add(std::make_unique<dot_printer>());
+auto& printer2 = graph.add(std::make_unique<dot_printer>());
+slow_dot.out_.connect(printer1.in_);
+fast_dot.out_.connect(printer2.in_);
+  
   graph.run(5.0, 1.0);
   return 0;
 }

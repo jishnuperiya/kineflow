@@ -9,6 +9,8 @@ class dot_source : public filter
 {
   public:
     out_pin<dot_sample> out_;
+
+    dot_source(double speed) : speed_(speed) {}
     void process(double timestamp_sec, double dt_sec) override
     {
         dot_sample s;
