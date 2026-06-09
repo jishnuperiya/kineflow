@@ -12,11 +12,16 @@ class dot_source : public filter
     void process(double timestamp_sec, double dt_sec) override
     {
         dot_sample s;
-        double speed = 1.0; // 1 m/s
         s.timestamp_sec = timestamp_sec;
-        s.x = timestamp_sec * speed;
-        s.y = timestamp_sec * speed;
+        s.x = x_;
+        s.y = y_;
         out_.write(std::make_shared<dot_sample>(s));
+        x_ += dt_sec * speed_;
+        y_ += dt_sec * speed_;
     }
+    private:
+      double x_     = 0.0;
+      double y_     = 0.0;
+      double speed_ = 1.0; // 1 m/s
 };
 } // namespace kineflow::pipeline
