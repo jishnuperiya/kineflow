@@ -57,23 +57,13 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/c/git-repo/sentinex
+CMAKE_SOURCE_DIR = /mnt/c/git-repo/kineflow
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/git-repo/sentinex/build
+CMAKE_BINARY_DIR = /mnt/c/git-repo/kineflow/build
 
 #=============================================================================
 # Targets provided globally by CMake.
-
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-.PHONY : test/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -95,56 +85,11 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
 
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-.PHONY : list_install_components/fast
-
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install
-
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install/fast
-
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip/fast
-
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/git-repo/sentinex/build/CMakeFiles /mnt/c/git-repo/sentinex/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/git-repo/kineflow/build/CMakeFiles /mnt/c/git-repo/kineflow/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/git-repo/sentinex/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/git-repo/kineflow/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -172,226 +117,41 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named sentinex-core
+# Target rules for targets named kineflow
 
 # Build rule for target.
-sentinex-core: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sentinex-core
-.PHONY : sentinex-core
+kineflow: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 kineflow
+.PHONY : kineflow
 
 # fast build rule for target.
-sentinex-core/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sentinex-core.dir/build.make CMakeFiles/sentinex-core.dir/build
-.PHONY : sentinex-core/fast
+kineflow/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kineflow.dir/build.make CMakeFiles/kineflow.dir/build
+.PHONY : kineflow/fast
 
-#=============================================================================
-# Target rules for targets named sentinex-sim
-
-# Build rule for target.
-sentinex-sim: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sentinex-sim
-.PHONY : sentinex-sim
-
-# fast build rule for target.
-sentinex-sim/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sentinex-sim.dir/build.make CMakeFiles/sentinex-sim.dir/build
-.PHONY : sentinex-sim/fast
-
-#=============================================================================
-# Target rules for targets named sentinex-test
-
-# Build rule for target.
-sentinex-test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sentinex-test
-.PHONY : sentinex-test
-
-# fast build rule for target.
-sentinex-test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sentinex-test.dir/build.make CMakeFiles/sentinex-test.dir/build
-.PHONY : sentinex-test/fast
-
-#=============================================================================
-# Target rules for targets named doc
-
-# Build rule for target.
-doc: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 doc
-.PHONY : doc
-
-# fast build rule for target.
-doc/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/doc.dir/build.make CMakeFiles/doc.dir/build
-.PHONY : doc/fast
-
-#=============================================================================
-# Target rules for targets named doctest_with_main
-
-# Build rule for target.
-doctest_with_main: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 doctest_with_main
-.PHONY : doctest_with_main
-
-# fast build rule for target.
-doctest_with_main/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/doctest-build/CMakeFiles/doctest_with_main.dir/build.make _deps/doctest-build/CMakeFiles/doctest_with_main.dir/build
-.PHONY : doctest_with_main/fast
-
-#=============================================================================
-# Target rules for targets named rapidcheck
-
-# Build rule for target.
-rapidcheck: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 rapidcheck
-.PHONY : rapidcheck
-
-# fast build rule for target.
-rapidcheck/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/rapidcheck-build/CMakeFiles/rapidcheck.dir/build.make _deps/rapidcheck-build/CMakeFiles/rapidcheck.dir/build
-.PHONY : rapidcheck/fast
-
-src/model/motion_model.o: src/model/motion_model.cpp.o
-.PHONY : src/model/motion_model.o
+src/pipeline/main.o: src/pipeline/main.cpp.o
+.PHONY : src/pipeline/main.o
 
 # target to build an object file
-src/model/motion_model.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sentinex-core.dir/build.make CMakeFiles/sentinex-core.dir/src/model/motion_model.cpp.o
-.PHONY : src/model/motion_model.cpp.o
+src/pipeline/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kineflow.dir/build.make CMakeFiles/kineflow.dir/src/pipeline/main.cpp.o
+.PHONY : src/pipeline/main.cpp.o
 
-src/model/motion_model.i: src/model/motion_model.cpp.i
-.PHONY : src/model/motion_model.i
-
-# target to preprocess a source file
-src/model/motion_model.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sentinex-core.dir/build.make CMakeFiles/sentinex-core.dir/src/model/motion_model.cpp.i
-.PHONY : src/model/motion_model.cpp.i
-
-src/model/motion_model.s: src/model/motion_model.cpp.s
-.PHONY : src/model/motion_model.s
-
-# target to generate assembly for a file
-src/model/motion_model.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sentinex-core.dir/build.make CMakeFiles/sentinex-core.dir/src/model/motion_model.cpp.s
-.PHONY : src/model/motion_model.cpp.s
-
-src/model/vehicle_state.o: src/model/vehicle_state.cpp.o
-.PHONY : src/model/vehicle_state.o
-
-# target to build an object file
-src/model/vehicle_state.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sentinex-core.dir/build.make CMakeFiles/sentinex-core.dir/src/model/vehicle_state.cpp.o
-.PHONY : src/model/vehicle_state.cpp.o
-
-src/model/vehicle_state.i: src/model/vehicle_state.cpp.i
-.PHONY : src/model/vehicle_state.i
+src/pipeline/main.i: src/pipeline/main.cpp.i
+.PHONY : src/pipeline/main.i
 
 # target to preprocess a source file
-src/model/vehicle_state.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sentinex-core.dir/build.make CMakeFiles/sentinex-core.dir/src/model/vehicle_state.cpp.i
-.PHONY : src/model/vehicle_state.cpp.i
+src/pipeline/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kineflow.dir/build.make CMakeFiles/kineflow.dir/src/pipeline/main.cpp.i
+.PHONY : src/pipeline/main.cpp.i
 
-src/model/vehicle_state.s: src/model/vehicle_state.cpp.s
-.PHONY : src/model/vehicle_state.s
-
-# target to generate assembly for a file
-src/model/vehicle_state.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sentinex-core.dir/build.make CMakeFiles/sentinex-core.dir/src/model/vehicle_state.cpp.s
-.PHONY : src/model/vehicle_state.cpp.s
-
-src/sentinex/main.o: src/sentinex/main.cpp.o
-.PHONY : src/sentinex/main.o
-
-# target to build an object file
-src/sentinex/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sentinex-sim.dir/build.make CMakeFiles/sentinex-sim.dir/src/sentinex/main.cpp.o
-.PHONY : src/sentinex/main.cpp.o
-
-src/sentinex/main.i: src/sentinex/main.cpp.i
-.PHONY : src/sentinex/main.i
-
-# target to preprocess a source file
-src/sentinex/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sentinex-sim.dir/build.make CMakeFiles/sentinex-sim.dir/src/sentinex/main.cpp.i
-.PHONY : src/sentinex/main.cpp.i
-
-src/sentinex/main.s: src/sentinex/main.cpp.s
-.PHONY : src/sentinex/main.s
+src/pipeline/main.s: src/pipeline/main.cpp.s
+.PHONY : src/pipeline/main.s
 
 # target to generate assembly for a file
-src/sentinex/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sentinex-sim.dir/build.make CMakeFiles/sentinex-sim.dir/src/sentinex/main.cpp.s
-.PHONY : src/sentinex/main.cpp.s
-
-test/main.o: test/main.cpp.o
-.PHONY : test/main.o
-
-# target to build an object file
-test/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sentinex-test.dir/build.make CMakeFiles/sentinex-test.dir/test/main.cpp.o
-.PHONY : test/main.cpp.o
-
-test/main.i: test/main.cpp.i
-.PHONY : test/main.i
-
-# target to preprocess a source file
-test/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sentinex-test.dir/build.make CMakeFiles/sentinex-test.dir/test/main.cpp.i
-.PHONY : test/main.cpp.i
-
-test/main.s: test/main.cpp.s
-.PHONY : test/main.s
-
-# target to generate assembly for a file
-test/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sentinex-test.dir/build.make CMakeFiles/sentinex-test.dir/test/main.cpp.s
-.PHONY : test/main.cpp.s
-
-test/test_motion_model.o: test/test_motion_model.cpp.o
-.PHONY : test/test_motion_model.o
-
-# target to build an object file
-test/test_motion_model.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sentinex-test.dir/build.make CMakeFiles/sentinex-test.dir/test/test_motion_model.cpp.o
-.PHONY : test/test_motion_model.cpp.o
-
-test/test_motion_model.i: test/test_motion_model.cpp.i
-.PHONY : test/test_motion_model.i
-
-# target to preprocess a source file
-test/test_motion_model.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sentinex-test.dir/build.make CMakeFiles/sentinex-test.dir/test/test_motion_model.cpp.i
-.PHONY : test/test_motion_model.cpp.i
-
-test/test_motion_model.s: test/test_motion_model.cpp.s
-.PHONY : test/test_motion_model.s
-
-# target to generate assembly for a file
-test/test_motion_model.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sentinex-test.dir/build.make CMakeFiles/sentinex-test.dir/test/test_motion_model.cpp.s
-.PHONY : test/test_motion_model.cpp.s
-
-test/test_vehicle_state.o: test/test_vehicle_state.cpp.o
-.PHONY : test/test_vehicle_state.o
-
-# target to build an object file
-test/test_vehicle_state.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sentinex-test.dir/build.make CMakeFiles/sentinex-test.dir/test/test_vehicle_state.cpp.o
-.PHONY : test/test_vehicle_state.cpp.o
-
-test/test_vehicle_state.i: test/test_vehicle_state.cpp.i
-.PHONY : test/test_vehicle_state.i
-
-# target to preprocess a source file
-test/test_vehicle_state.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sentinex-test.dir/build.make CMakeFiles/sentinex-test.dir/test/test_vehicle_state.cpp.i
-.PHONY : test/test_vehicle_state.cpp.i
-
-test/test_vehicle_state.s: test/test_vehicle_state.cpp.s
-.PHONY : test/test_vehicle_state.s
-
-# target to generate assembly for a file
-test/test_vehicle_state.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sentinex-test.dir/build.make CMakeFiles/sentinex-test.dir/test/test_vehicle_state.cpp.s
-.PHONY : test/test_vehicle_state.cpp.s
+src/pipeline/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/kineflow.dir/build.make CMakeFiles/kineflow.dir/src/pipeline/main.cpp.s
+.PHONY : src/pipeline/main.cpp.s
 
 # Help Target
 help:
@@ -400,36 +160,11 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... install"
-	@echo "... install/local"
-	@echo "... install/strip"
-	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... test"
-	@echo "... doc"
-	@echo "... doctest_with_main"
-	@echo "... rapidcheck"
-	@echo "... sentinex-core"
-	@echo "... sentinex-sim"
-	@echo "... sentinex-test"
-	@echo "... src/model/motion_model.o"
-	@echo "... src/model/motion_model.i"
-	@echo "... src/model/motion_model.s"
-	@echo "... src/model/vehicle_state.o"
-	@echo "... src/model/vehicle_state.i"
-	@echo "... src/model/vehicle_state.s"
-	@echo "... src/sentinex/main.o"
-	@echo "... src/sentinex/main.i"
-	@echo "... src/sentinex/main.s"
-	@echo "... test/main.o"
-	@echo "... test/main.i"
-	@echo "... test/main.s"
-	@echo "... test/test_motion_model.o"
-	@echo "... test/test_motion_model.i"
-	@echo "... test/test_motion_model.s"
-	@echo "... test/test_vehicle_state.o"
-	@echo "... test/test_vehicle_state.i"
-	@echo "... test/test_vehicle_state.s"
+	@echo "... kineflow"
+	@echo "... src/pipeline/main.o"
+	@echo "... src/pipeline/main.i"
+	@echo "... src/pipeline/main.s"
 .PHONY : help
 
 
