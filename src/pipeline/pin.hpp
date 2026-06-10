@@ -38,6 +38,11 @@ class out_pin
       connected_pins_.push_back(&in);
     }
 
+    void disconnect(in_pin<T>& in)
+    {
+      std::erase(connected_pins_,&in);
+    }
+
     void write(std::shared_ptr<const T> sample)
     {
       for(auto* pin: connected_pins_)
