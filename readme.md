@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>Open-source, lightweight alternative to ADTF for real-time data pipelines.</strong>
+  <strong>Learning and building an Open-source, lightweight middleware for real-time data pipelines.</strong>
 </p>
 
 <p align="center">
