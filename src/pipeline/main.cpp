@@ -15,9 +15,11 @@ int main()
   auto& fast_dot = graph.add(std::make_unique<dot_source>(1.0));
   
   auto& printer1 = graph.add(std::make_unique<dot_printer>());
-auto& printer2 = graph.add(std::make_unique<dot_printer>());
-slow_dot.out_.connect(printer1.in_);
-fast_dot.out_.connect(printer2.in_);
+  auto& printer2 = graph.add(std::make_unique<dot_printer>());
+
+  graph.connect(slow_dot.out_, printer1.in_);
+  graph.connect(fast_dot.out_,printer2.in_);
+
   
   graph.run(5.0, 1.0);
   return 0;

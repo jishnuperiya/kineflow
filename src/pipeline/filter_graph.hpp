@@ -2,6 +2,7 @@
 #include <memory>
 #include <vector>
 #include "filter.hpp"
+#include "pin.hpp"
 
 namespace kineflow::pipeline
 {
@@ -15,6 +16,18 @@ public:
     auto* raw = filter.get(); //save the address while still valid
     filters_.push_back(std::move(filter));
     return *raw;
+  }
+ 
+  template<typename T>
+  void connect(out_pin<T>& out, in_pin<T>& in)
+  {
+    out.connect(in);
+  }
+
+  template<typename T>
+  void disconnect(out_pin<T>& out, in_pin<T>& in)
+  {
+    out.disconnect(in);
   }
 
   void run(double duration_sec, double dt_sec)
