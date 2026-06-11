@@ -19,17 +19,17 @@ public:
   }
  
   template<typename T>
-  void connect(out_pin<T>& out, in_pin<T>& in)
+  uint64_t connect(out_pin<T>& out, in_pin<T>& in)
   {
-    out.connect(in);
+    return out.connect(in);
   }
 
   template<typename T>
-  void disconnect(out_pin<T>& out, in_pin<T>& in)
+  void disconnect(out_pin<T>& out, std::uint64_t handle)
   {
-    out.disconnect(in);
+    out.disconnect(handle);
   }
-
+  
   void run(double duration_sec, double dt_sec)
   {
     double timestamp_sec = 0.0;

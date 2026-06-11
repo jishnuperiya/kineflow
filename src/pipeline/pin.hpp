@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
-#include <vector>
+#include <map>
+#include <cstdint>
 
 namespace kineflow::pipeline
 {
@@ -33,25 +34,28 @@ template<typename T>
 class out_pin
 {
   public:
-    void connect(in_pin<T>& in)
+    uint64_t connect(in_pin<T>& in)
     {
-      connected_pins_.push_back(&in);
+      next_handle_++;
+      connected_pins_.emplace(next_handle_, &in);
+      return next_handle_;
     }
 
-    void disconnect(in_pin<T>& in)
+    void disconnect(uint64_t handle)
     {
-      std::erase(connected_pins_,&in);
+      connected_pins_.erase(handle);
     }
 
     void write(std::shared_ptr<const T> sample)
     {
-      for(auto* pin: connected_pins_)
+      for(auto& [handle, pin]: connected_pins_)
       {
         pin->receive(sample);
       }
     }
   private:
-    std::vector<in_pin<T>*> connected_pins_;
+    std::map<uint64_t,in_pin<T>*> connected_pins_;
+    std::uint64_t next_handle_ = 0;
 };
 
 } // namespace kineflow::pipeline
