@@ -1,3 +1,0 @@
-/mnt/c/git-repo/kineflow/build/CMakeFiles/kineflow.dir
-/mnt/c/git-repo/kineflow/build/CMakeFiles/edit_cache.dir
-/mnt/c/git-repo/kineflow/build/CMakeFiles/rebuild_cache.dir
