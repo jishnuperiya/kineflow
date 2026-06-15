@@ -18,6 +18,12 @@ public:
     return *raw;
   }
  
+  filter& add2(std::unique_ptr<filter> f)
+  {
+    auto* raw = f.get(); //save the address while still valid
+    filters_.push_back(std::move(f));
+    return *raw;
+  }
   template<typename T>
   uint64_t connect(out_pin<T>& out, in_pin<T>& in)
   {
