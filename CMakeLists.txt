@@ -24,6 +24,14 @@ else()
 endif()
 
 #******************************************************************************
+# Dependencies
+#******************************************************************************
+include(FetchContent)
+
+FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz)
+FetchContent_MakeAvailable(json)
+
+#******************************************************************************
 # Core Library (header-only)
 #******************************************************************************
 add_library(kineflow-core INTERFACE)
@@ -33,4 +41,4 @@ target_include_directories(kineflow-core INTERFACE src)
 # Main Executable
 #******************************************************************************
 add_executable(kineflow src/pipeline/main.cpp)
-target_link_libraries(kineflow PRIVATE kineflow-core)
+target_link_libraries(kineflow PRIVATE kineflow-core nlohmann_json::nlohmann_json)

@@ -6,6 +6,7 @@
 #include <memory>
 #include "runtime_graph.hpp"
 #include <string>
+#include "nlohmann/json.hpp"
 
 using namespace kineflow::pipeline;
 int main()
@@ -42,5 +43,12 @@ int main()
   // rgraph.connect(1, 0, 2, 0);
 
   // rgraph.tick(0.0, 1.0);
+
+      // Test nlohmann/json
+    auto j = nlohmann::json::parse(R"({"hello": "kineflow", "version": 1})");
+    
+    std::cout << "JSON works!\n";
+    std::cout << "hello: " << j["hello"] << "\n";
+    std::cout << "version: " << j["version"] << "\n";
   return 0;
 }
