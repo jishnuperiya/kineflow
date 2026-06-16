@@ -25,11 +25,6 @@ int main()
   auto& printer1 = graph.add2(std::make_unique<dot_printer>());
   auto& printer2 = graph.add2(std::make_unique<dot_printer>());
 
-  graph.connect(slow_dot.out_, printer1.in_);
-  graph.connect(fast_dot.out_,printer2.in_);
-
-  graph.run(5.0, 1.0);
-
 
   // runtime graph construction
 
