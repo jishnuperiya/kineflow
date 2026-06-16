@@ -1,34 +1,46 @@
 {
   "filters": [
     {
-      "id": 1,
+      "id": 0,
       "type": "number_source",
-      "properties": {"value": "20"},
+      "name": "my_source",
+      "properties": [
+        {"name": "value", "type": "int", "values": ["20"]}
+      ],
       "pins": [
-        {"id": 0, "direction": "out", "data_type": "int"}
+        {"id": 0, "name": "output", "direction": "out", "type": "int"}
+      ]
+    },
+    {
+      "id": 1,
+      "type": "multiply",
+      "name": "my_multiplier",
+      "properties": [
+        {"name": "factor", "type": "int", "values": ["5"]}
+      ],
+      "pins": [
+        {"id": 0, "name": "input",  "direction": "in",  "type": "int"},
+        {"id": 1, "name": "output", "direction": "out", "type": "int"}
       ]
     },
     {
       "id": 2,
-      "type": "multiply",
-      "properties": {"factor": "5"},
-      "pins": [
-        {"id":0 , "direction": "in", "data_type": "int"},
-        {"id":1 , "direction": "out", "data_type": "int"}
-
-      ]
-    },
-    {
-      "id": 3,
       "type": "console_printer",
-      "properties": {},
+      "name": "my_printer",
+      "properties": [],
       "pins": [
-        {"id":0 , "direction": "in", "data_type": "int"}
+        {"id": 0, "name": "input", "direction": "in", "type": "int"}
       ]
     }
   ],
   "connections": [
-    {"from_node": 1, "from_port": 0, "to_node": 2, "to_port": 0},
-    {"from_node": 2, "from_port": 1, "to_node": 3, "to_port": 0}
+    {
+      "source": {"filter": 0, "pin": 0},
+      "target": {"filter": 1, "pin": 0}
+    },
+    {
+      "source": {"filter": 1, "pin": 1},
+      "target": {"filter": 2, "pin": 0}
+    }
   ]
 }
