@@ -1,46 +1,36 @@
 #include <iostream>
-#include "hello_filter.hpp"
-#include "filter_graph.hpp"
-#include "dot_source.hpp"
-#include "dot_printer.hpp"
-#include <memory>
-#include "runtime_graph.hpp"
 #include <string>
+#include <sstream>
+#include <fstream>
+
+#include "pipeline_parser.hpp"
 
 using namespace kineflow::pipeline;
 int main()
 {
-  std::cout << "Hello, kineflow!\n";
+  std::string s = R"({"name": "Jishnu", "age": 30})";
+  std::istringstream stream(s);
 
-  // static graph construction
-  filter_graph graph;
+  std::ifstream file_stream("/mnt/c/git-repo/kineflow/examples/calculator_pipeline.json");
 
-  std::cout << "static graph\n";
-
-
-  auto& slow_dot = graph.add(std::make_unique<dot_source>(0.5));
-  auto& fast_dot = graph.add(std::make_unique<dot_source>(1.0));
-  //auto& string_f = graph.add(std::make_unique<std::string>());
+  if(!file_stream.is_open())
+  {
+    std::cerr << "Failed to open pipeline JSON file" << std::endl;
+    return 1;
+  }
   
-  auto& printer1 = graph.add2(std::make_unique<dot_printer>());
-  auto& printer2 = graph.add2(std::make_unique<dot_printer>());
+  nlohmann::json j;
+  try
+  {
+    j = parse_pipeline_json(file_stream);
+  }
+  catch(const std::runtime_error& e)
+  {
+    std::cerr << e.what() << std::endl;
+    return 1;
+  }
 
-
-  // runtime graph construction
-
-  // runtime_graph rgraph;
-  // std::cout << "runtime graph\n";
-  // auto* src_filter = new dot_source(1.0);
-  // auto* prn_filter = new dot_printer();
-
-  // rgraph.add_filter(1, std::unique_ptr<filter>(src_filter));
-  // rgraph.add_filter(2, std::unique_ptr<filter>(prn_filter));
-
-  // rgraph.register_out_pin(1, 0, "dot_sample", &src_filter->out_);
-  // rgraph.register_in_pin(2, 0, "dot_sample", &prn_filter->in_);
-
-  // rgraph.connect(1, 0, 2, 0);
-
-  // rgraph.tick(0.0, 1.0);
+  std::string test = dump_pipeline(j);
+  std::cout << test<< std::endl;
   return 0;
 }
