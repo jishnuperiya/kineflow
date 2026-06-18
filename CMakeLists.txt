@@ -10,6 +10,9 @@ project(kineflow
   DESCRIPTION   "Kineflow: Open-source, lightweight alternative to ADTF for real-time data pipelines."
   HOMEPAGE_URL  "https://github.com/jishnuperiya/kineflow")
 
+set(CMAKE_BUILD_TYPE Debug)
+
+
 #******************************************************************************
 # CMake Configuration
 #******************************************************************************
@@ -34,11 +37,13 @@ FetchContent_MakeAvailable(json)
 #******************************************************************************
 # Core Library (header-only)
 #******************************************************************************
-add_library(kineflow-core INTERFACE)
-target_include_directories(kineflow-core INTERFACE src)
-
+add_library(kineflow-core STATIC
+            src/pipeline/pipeline_parser.cpp
+)
+target_include_directories(kineflow-core PUBLIC src)
+target_link_libraries(kineflow-core PUBLIC nlohmann_json::nlohmann_json)
 #******************************************************************************
 # Main Executable
 #******************************************************************************
 add_executable(kineflow src/pipeline/main.cpp)
-target_link_libraries(kineflow PRIVATE kineflow-core nlohmann_json::nlohmann_json)
+target_link_libraries(kineflow PRIVATE kineflow-core)
