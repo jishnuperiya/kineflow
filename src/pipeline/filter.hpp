@@ -1,65 +1,63 @@
 #pragma once
-#include<map>
+
+#include <memory>
+#include <nlohmann/json.hpp>
+#include <functional>
+#include <unordered_map>
+#include <string_view>
 
 namespace kineflow::pipeline
 {
-
-  using value_ptr = std::unique_ptr<value>;
-using type_ptr = std::unique_ptr<type>;
-
-
-struct filter
-{
-  virtual ~filter() = default;
-  virtual void process(double timestamp_sec, double dt_sec) = 0;
-};
-
-// a filter that can be dynamically instantiated from a textual description of its types and properties
-struct json_filter : filter
-{
   
-};
-//types names for k and v
-struct value;
-/*
-given a type, i can use it to instantiate a value of that type from a text representation of the value
-*/
-struct type 
-{
- virtual ~type() = default;
+  struct pin
+  {
+    enum class direction
+    {
+    in,
+    out
+    };
 
-//  virtual std::string get_type_name() const = 0;
- virtual std::unique_ptr<value> new_value(std::string_view) const  = 0; 
-};
+    enum class type
+    {
+      integer,
+      real
+    };
+
+    const int id;
+    const std::string name;
+    const direction dir;
+    const type pin_type;
+  };
+
+  struct filter
+  {
+    virtual ~filter() = default;
+    virtual void process(double timestamp_sec, double dt) = 0;
+    virtual std::span<pin_ptr> get_pins() const noexcept = 0; //pins - someting iterator based - range , span etc 
+    /*
+    perhaps get_input_pin(name)
+    get output pin
+    then no need to expose shape of pin arrray
+    */
+  };
+
+  // struct filter_factory
+  // {
+  //   static std::unique_ptr<filter> create_filter(const nlohmann::json& config);
+  // }; //just a funciton . no state
+
+  using filter_factory_function = std::function<std::unique_ptr<filter>(const nlohmann::json&)>;
 
 
-struct value
-{
-  virtual ~value() = default;
-  virtual void insert(std::ostream&) const = 0; 
-
-};
-
-//-------belwo move into plugins or cpp files for now
-
-//-----
+  using filter_ptr = std::unique_ptr<filter>;
+  using pin_ptr = std::unique_ptr<pin>;
+  using pin_vec = std::vector<pin_ptr>
 
 
-/*
+  filter_ptr create_filter(const nlohmann::json& config);
+   
+  pin_ptr create_pin(const nlohmann::json& config);
 
-{
-      "id": 0,
-      "type": "number_source",
-      "name": "my_source",
-      "properties": [
-        {"name": "value", "type": "int", "values": "20"}
-      ],
-      "pins": [
-        {"id": 0, "name": "output", "direction": "out", "type": "int"}
-      ]
-    }
-
-*/
-
-} // namespace kineflow::pipeline
-
+pin_vec create_pins(const nlohmann::json& config);
+  
+}
