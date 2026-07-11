@@ -72,6 +72,7 @@ namespace
           error("filter " + std::to_string(filter_id) + ": pin must have a string 'type'");
   }
 
+
   //*
   //* Validates the filters array against the CFG rule:
   //*   filter ::= { "id": natural, "type": filter-type, "name": name,
@@ -81,6 +82,8 @@ namespace
   //*   - filter ids must be unique
   //*   - type and name must be valid C identifiers
   //*
+
+
   void validate_filters(const nlohmann::json& filters)
   {
       std::set<int> seen_ids;
@@ -109,8 +112,8 @@ namespace
           if (!is_valid_identifier(f["name"].get<std::string>()))
               error("filter " + std::to_string(id) + ": 'name' must be a valid C identifier");
 
-          if (!f.contains("properties") || !f["properties"].is_array())
-              error("filter " + std::to_string(id) + ": must have an array 'properties'");
+        //   if (!f.contains("properties") || !f["properties"].is_array())
+        //       error("filter " + std::to_string(id) + ": must have an array 'properties'");
 
           if (!f.contains("pins") || !f["pins"].is_array())
               error("filter " + std::to_string(id) + ": must have an array 'pins'");

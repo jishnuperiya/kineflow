@@ -5,7 +5,7 @@
       "type": "number_source",
       "name": "my_source",
   
-      "value": 20
+      "value": "20"
       ,
       "pins": [
         {"id": 0, "name": "output", "direction": "out", "type": "int"}
@@ -15,12 +15,21 @@
       "id": 1,
       "type": "multiply",
       "name": "my_multiplier",
-      
-      "value": 2,
-
+      "properties": [
+        {"name": "factor", "type": "int", "values": ["5"]}
+      ],
       "pins": [
         {"id": 0, "name": "input",  "direction": "in",  "type": "int"},
         {"id": 1, "name": "output", "direction": "out", "type": "int"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "console_printer",
+      "name": "my_printer",
+      "properties": [],
+      "pins": [
+        {"id": 0, "name": "input", "direction": "in", "type": "int"}
       ]
     }
   ],
@@ -28,13 +37,10 @@
     {
       "source": {"filter": 0, "pin": 0},
       "target": {"filter": 1, "pin": 0}
+    },
+    {
+      "source": {"filter": 1, "pin": 1},
+      "target": {"filter": 2, "pin": 0}
     }
   ]
 }
-
-/*
-all pins are essentially same shape
-
-pin class
-create_pin(json_config&)
-*/
