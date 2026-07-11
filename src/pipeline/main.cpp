@@ -66,7 +66,7 @@ int main()
   for (const auto& filter_json : tree["filters"])
   {
     std::cout << filter_json["type"] << "\n";
-    filters.push_back(filter_factory::create_filter(filter_json));
+    filters.push_back(create_filter(filter_json));
   }
 
   /*

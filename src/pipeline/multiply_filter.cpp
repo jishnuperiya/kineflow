@@ -4,7 +4,8 @@
 
 #include<iostream>
 
-
+//todo : move the filter to only cpp. no header needed
+//todo : read pins form the config file and store in a vector of pins
 namespace kineflow::pipeline
 {
   class multiply_filter : public filter

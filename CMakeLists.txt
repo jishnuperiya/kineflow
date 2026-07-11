@@ -40,7 +40,8 @@ FetchContent_MakeAvailable(json)
 add_library(kineflow-core STATIC
             src/pipeline/pipeline_parser.cpp
             src/pipeline/filter.cpp
-            
+            src/pipeline/number_source_filter.cpp
+            src/pipeline/multiply_filter.cpp 
 )
 target_include_directories(kineflow-core PUBLIC src)
 target_link_libraries(kineflow-core PUBLIC nlohmann_json::nlohmann_json)

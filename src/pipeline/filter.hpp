@@ -9,6 +9,8 @@
 namespace kineflow::pipeline
 {
   
+  //todo - clean up the pin struct
+  
   struct pin
   {
     enum class direction
@@ -23,6 +25,7 @@ namespace kineflow::pipeline
       real
     };
 
+    
     const int id;
     const std::string name;
     const direction dir;
@@ -33,7 +36,12 @@ namespace kineflow::pipeline
   {
     virtual ~filter() = default;
     virtual void process(double timestamp_sec, double dt) = 0;
-    virtual std::span<pin_ptr> get_pins() const noexcept = 0; //pins - someting iterator based - range , span etc 
+
+    //todo: get pins-- note: span cant have unique pinter. so may be vector? or can i treally own ? may be an observer pattern? learn this
+    //virtual std::span<pin_ptr> get_pins() const noexcept = 0; //pins - someting iterator based - range , span etc 
+    
+    
+    //note for later
     /*
     perhaps get_input_pin(name)
     get output pin
@@ -41,20 +49,15 @@ namespace kineflow::pipeline
     */
   };
 
-  // struct filter_factory
-  // {
-  //   static std::unique_ptr<filter> create_filter(const nlohmann::json& config);
-  // }; //just a funciton . no state
 
   using filter_factory_function = std::function<std::unique_ptr<filter>(const nlohmann::json&)>;
   
 
   using filter_ptr = std::unique_ptr<filter>;
   using pin_ptr = std::unique_ptr<pin>;
-  using pin_vec = std::vector<pin_ptr>
+  using pin_vec = std::vector<pin_ptr>;
 
   filter_ptr create_filter(const nlohmann::json& config);
-   
   pin_ptr create_pin(const nlohmann::json& config);
   pin_vec create_pins(const nlohmann::json& config);
 
