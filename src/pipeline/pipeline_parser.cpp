@@ -24,7 +24,7 @@ namespace
   //*
   //* Throws a runtime_error with a descriptive pipeline error message.
   //*
-  void error(const std::string msg)
+  void error(const std::string& msg)
   {
       throw std::runtime_error("Pipeline error: " + msg);
   }
@@ -129,7 +129,7 @@ namespace
   //*   filter-pin ::= { "filter": natural, "pin": natural }
   //*
   //* Also enforces semantic constraint:
-  //*   - referenced filter ids must exist
+  //*   - referenced filter ids Amust exist
   //*
   void validate_connections(const nlohmann::json& connections, const nlohmann::json& filters)
   {

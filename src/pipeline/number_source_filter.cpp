@@ -3,7 +3,7 @@
 
 #include "filter.hpp"
 
-
+//todo : move the filter to only cpp. no header needed
 namespace kineflow::pipeline
 {
   struct number_source_filter : filter
@@ -16,7 +16,8 @@ namespace kineflow::pipeline
       {
         m_output_value = config["value"].get<int>();
       }
-      m_pins = create_pins(config["pins"]); // - return vec of pin pr
+      //todoit create and store poins from the config json  
+      //m_pins = create_pins(config["pins"]); // - return vec of pin pr
     }
     void process(double timestamp_sec, double dt_sec) override
     {
@@ -25,20 +26,17 @@ namespace kineflow::pipeline
   
   // private:
     int m_output_value = 0;
-    pins m_pins; //prob a vec
+    //todo: the filter owns the pins - probably a vector of unique_ptrs to pins?
+    // pin_vec m_pins;
 
   };
-
+  
   std::unique_ptr<filter> create_number_source_filter(const nlohmann::json& config)
   {
     auto f = std::make_unique<number_source_filter>();
     f->configure(config);
     return f;
   }
-
-// todo - o jave tp tp dp tjos
-//todo - move to cpp file
-  // current - deafult ctor + configure 
 
 
 } // namespace kineflow::pipeline

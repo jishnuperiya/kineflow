@@ -7,26 +7,19 @@ namespace kineflow::pipeline
 {
 
   using filter_factory_function = std::function<std::unique_ptr<filter>(const nlohmann::json&)>;
-
-  extern filter_factory_function create_number_source_filter;
-  extern filter_factory_function create_multiply_filter;
   
-  // const std::unordered_map<std::string_view, filter_factory_function> filter_factory_map;
-  // const std::unordered_map<std::string_view, filter_factory_function> filter_factory_map
-  // {
-  //     {"number_source", create_number_source_filter},
-  //     {"multiply", create_multiply_filter}
-  // };
+  // extern is redundant here since functions has external linkage by default. but good practice.
+  extern std::unique_ptr<filter> create_number_source_filter(const nlohmann::json& config);
+  extern std::unique_ptr<filter> create_multiply_filter(const nlohmann::json& config);  
 
- 
-  std::uniue_ptr<pin> create_filter(const nlohmann::json& config);
-  std::unique_ptr<filter> filter_factory::create_filter(const nlohmann::json& config)
+  std::unique_ptr<filter> create_filter(const nlohmann::json& config)
   {
-    static const std::unordered_map<std::string_view, filter_factory_function> filter_factory_map
+    // TODO(#16): static/closed registry - revisit for plugin based registration
+    static const std::unordered_map<std::string_view, filter_factory_function> filter_factory_map  
     {
-      {"number_source", create_number_source_filter},
+      {"number_source", create_number_source_filter}, 
       {"multiply", create_multiply_filter}
-    };
+    }; 
 
     if(!config.is_object())
     {
@@ -44,9 +37,8 @@ namespace kineflow::pipeline
     {
        return it->second(config);
     }
-    
-    throw std::invalid_argument("unknown filter type: " + type);
-   
+    //TODO(#17) : custom exception classes  
+    throw std::invalid_argument("Unknown filter type: " + type + ". Available types: number_source, multiply");  //TODO - get the available tyoes from map itself 
   }
 
 } // namespace kineflow::pipeline
