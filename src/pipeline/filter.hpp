@@ -47,17 +47,15 @@ namespace kineflow::pipeline
   // }; //just a funciton . no state
 
   using filter_factory_function = std::function<std::unique_ptr<filter>(const nlohmann::json&)>;
-
+  
 
   using filter_ptr = std::unique_ptr<filter>;
   using pin_ptr = std::unique_ptr<pin>;
   using pin_vec = std::vector<pin_ptr>
 
-
   filter_ptr create_filter(const nlohmann::json& config);
    
   pin_ptr create_pin(const nlohmann::json& config);
+  pin_vec create_pins(const nlohmann::json& config);
 
-pin_vec create_pins(const nlohmann::json& config);
-  
 }

@@ -1,10 +1,21 @@
-#include <fstream>
-#include <iostream>
-#include <memory>
-#include <vector>
+//******** Copyright � 2026 Jishnu Periya, Jonathon Bell. All rights reserved.
+//*
+//*
+//*  Version : $Header:$
+//*
+//*
+//*  Purpose : Implementation for class `harmony::pitch`.
+//*
+//*
+//****************************************************************************
 
-#include "filter.hpp"
-#include "pipeline_parser.hpp"
+#include <fstream>                  //for std::ifstream
+#include <iostream>                 //for std::cout      
+#include <memory>                   //for std::unique_ptr
+#include <vector>                   //for std::vector
+
+#include "filter.hpp"               //for kineflow::pipeline::filter
+#include "pipeline_parser.hpp"      //for kineflow::pipeline::parse_pipeline_json, kineflow::pipeline::dump_pipeline
 
 int main()
 {
@@ -22,6 +33,7 @@ int main()
 // }
 
   std::ifstream file_stream("/mnt/c/git-repo/kineflow/examples/calculator_pipeline.json");
+  
   
   if (!file_stream.is_open())
   {

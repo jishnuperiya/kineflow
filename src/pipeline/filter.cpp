@@ -19,7 +19,7 @@ namespace kineflow::pipeline
   // };
 
  
-  std::uniue_ptrypin create_filter(const nlohmann::json& config);
+  std::uniue_ptr<pin> create_filter(const nlohmann::json& config);
   std::unique_ptr<filter> filter_factory::create_filter(const nlohmann::json& config)
   {
     static const std::unordered_map<std::string_view, filter_factory_function> filter_factory_map

@@ -2,6 +2,9 @@
 #include "filter.hpp"
 #include <iostream>
 
+#include<iostream>
+
+
 namespace kineflow::pipeline
 {
   class multiply_filter : public filter
@@ -31,4 +34,6 @@ namespace kineflow::pipeline
     f->configure(config);
     return f;
   }
+
 } // namespace kineflow::pipeline
+ 
