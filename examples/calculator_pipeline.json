@@ -1,13 +1,15 @@
 {
-  "filters": [
+  "filters":
+  [
     {
       "id": 0,
       "type": "number_source",
       "name": "my_source",
   
-      "value": 20
-      ,
-      "pins": [
+      "value": 20,
+
+      "pins":
+      [
         {"id": 0, "name": "output", "direction": "out", "type": "int"}
       ]
     },
@@ -18,7 +20,8 @@
       
       "value": 2,
 
-      "pins": [
+      "pins":
+      [
         {"id": 0, "name": "input",  "direction": "in",  "type": "int"},
         {"id": 1, "name": "output", "direction": "out", "type": "int"}
       ]
@@ -31,10 +34,3 @@
     }
   ]
 }
-
-/*
-all pins are essentially same shape
-
-pin class
-create_pin(json_config&)
-*/

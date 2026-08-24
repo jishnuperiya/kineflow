@@ -5,7 +5,6 @@
 
 namespace kineflow::pipeline
 {
-
   using filter_factory_function = std::function<std::unique_ptr<filter>(const nlohmann::json&)>;
   
   // extern is redundant here since functions has external linkage by default. but good practice.
@@ -14,7 +13,7 @@ namespace kineflow::pipeline
 
   std::unique_ptr<filter> create_filter(const nlohmann::json& config)
   {
-    // TODO(#16): static/closed registry - revisit for plugin based registration
+    // think: static/closed registry - revisit for plugin based registration
     static const std::unordered_map<std::string_view, filter_factory_function> filter_factory_map  
     {
       {"number_source", create_number_source_filter}, 
@@ -37,8 +36,47 @@ namespace kineflow::pipeline
     {
        return it->second(config);
     }
-    //TODO(#17) : custom exception classes  
-    throw std::invalid_argument("Unknown filter type: " + type + ". Available types: number_source, multiply");  //TODO - get the available tyoes from map itself 
+    //do: custom exception classes
+    throw std::invalid_argument("Unknown filter type: " + type + ". Available types: number_source, multiply");  // get the available tyoes from map itself
+  }
+
+  namespace
+  {
+    pin::direction parse_direction(const std::string& direction)   //todo:new
+    {
+      if (direction == "in" ) return pin::direction::in;
+      if (direction == "out" ) return pin::direction::out;
+      throw std::invalid_argument("Unknown direction: " + direction);
+    }
+
+    pin::type parse_type(const std::string& type)   //todo:new
+    {
+      if (type == "int") return pin::type::integer;
+      if (type == "real") return pin::type::real;
+      throw std::invalid_argument("Unknown type: " + type);
+    }
+
+  }
+
+  pin_ptr create_pin(const nlohmann::json& config)   //todo:new
+  {
+   return std::make_unique<pin>
+     (
+       config["id"].get<int>(),
+       config["name"].get<std::string>(),
+       parse_direction(config["direction"].get<std::string>()),
+       parse_type(config["type"].get<std::string>())
+     );
+  }
+
+  pin_vec create_pins(const nlohmann::json& config)   //todo:new
+  {
+    pin_vec pins;
+    for (const auto& pin_json : config)
+    {
+      pins.push_back(create_pin(pin_json));
+    }
+    return pins;
   }
 
 } // namespace kineflow::pipeline
