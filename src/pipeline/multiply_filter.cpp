@@ -4,8 +4,6 @@
 
 #include<iostream>
 
-//todo : move the filter to only cpp. no header needed
-//todo : read pins form the config file and store in a vector of pins
 namespace kineflow::pipeline
 {
   class multiply_filter : public filter
@@ -18,6 +16,7 @@ namespace kineflow::pipeline
       {
         m_multiplication_factor = config["value"].get<int>();
       }
+      m_pins = create_pins(config.at("pins"));
     }
     void process(double timestamp_sec, double dt_sec) override
     {
@@ -26,6 +25,7 @@ namespace kineflow::pipeline
   
   private:
     int m_multiplication_factor = 0;
+    //pin_vec m_pins; moved to base class //todo:new
 
   };
 
